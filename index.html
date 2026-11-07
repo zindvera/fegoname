@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FegoName — AI Brand & Product Naming for Freelancers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            canvas: '#fbfbfb',
+            ink: {
+              950: '#09090b',
+              900: '#0f172a',
+              800: '#1e293b',
+              700: '#334155',
+              600: '#475569',
+              500: '#64748b',
+              400: '#94a3b8',
+              200: '#e2e8f0',
+              100: '#f1f5f9',
+              50: '#f8fafc'
+            },
+            teal: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #fbfbfb;
+      color: #09090b;
+    }
+
+    ::selection {
+      background-color: #ccfbf1;
+      color: #115e59;
+    }
+
+    .modal-backdrop {
+      background-color: rgba(9, 9, 11, 0.75);
+      backdrop-filter: blur(6px);
+    }
+
+    .pen-underline-container {
+      position: relative;
+      display: inline-block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: center center;
+    }
+
+    .pen-underline-container.highlight-pop {
+      transform: scale(1.08);
+    }
+
+    .pen-stroke-svg {
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 8px;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .pen-stroke-path {
+      stroke: #0d9488;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      fill: none;
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      opacity: 0;
+      transition: stroke-dashoffset 0.85s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+    }
+
+    .pen-stroke-path.drawn {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+
+    .pen-stroke-path.fade-out {
+      opacity: 0;
+      transition: opacity 0.4s ease-out;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen font-sans antialiased flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="border-b border-ink-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      <a href="index.html" class="flex items-center hover:opacity-85 transition" title="FegoName">
+        <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=120"
+          alt="FegoName Logo" onerror="this.onerror=null; this.src='https://placehold.co/96x96/09090b/2dd4bf?text=FN';"
+          class="w-8 h-8 rounded-xl object-cover shadow-xs border border-ink-800" />
+      </a>
+
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Settings Button for Groq API Key -->
+        <button id="openSettingsBtn" type="button"
+          class="hidden p-2 sm:px-3 sm:py-2 text-xs sm:text-sm font-semibold text-ink-700 hover:text-ink-950 hover:bg-ink-100 rounded-xl transition items-center gap-1.5 border border-ink-200 shadow-2xs"
+          title="Custom Groq AI API Key">
+          <svg class="w-4 h-4 text-ink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
+            </path>
+          </svg>
+          <span class="hidden sm:inline" id="keyStatusText">AI Key</span>
+          <span id="keyIndicatorDot" class="w-2 h-2 rounded-full bg-ink-300"></span>
+        </button>
+
+        <!-- Upgrade Button -->
+        <button id="openUpgradeBtn" type="button"
+          class="text-xs sm:text-sm font-semibold text-white bg-ink-950 hover:bg-black px-4 py-2 rounded-xl transition shadow-xs flex items-center gap-1.5 active:scale-95 border border-ink-800">
+          <span class="text-teal-400 font-bold">★</span>
+          <span id="upgradeBtnLabel">Upgrade</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-16 flex-grow w-full">
+
+    <!-- Hero Header Section -->
+    <div class="text-center mb-10 sm:mb-14 max-w-2xl mx-auto">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-ink-950 leading-[1.15]">
+        Unique Untaken <span class="text-teal-600">Brand & Product</span> Name AI
+      </h1>
+
+      <div class="my-6 sm:my-8 px-2">
+        <p class="text-base sm:text-lg text-ink-700 leading-relaxed max-w-xl mx-auto font-normal">
+          Suggests coined, unique names where no one has taken the name across any domain extension.
+        </p>
+      </div>
+
+      <div class="pt-1">
+        <span id="freelancerHighlight" class="pen-underline-container">
+          <p class="text-sm sm:text-base font-semibold text-teal-600 tracking-tight select-none">
+            For freelancers providing brand or product naming services
+          </p>
+          <svg class="pen-stroke-svg" viewBox="0 0 500 8" fill="none" preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path id="penPath" class="pen-stroke-path" d="M 2,4 Q 250,7 498,4" />
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <!-- Conversational Feed / Turns Container -->
+    <div id="threadContainer" class="space-y-12"></div>
+
+  </main>
+
+  <footer class="border-t border-ink-200 bg-white py-6 mt-16">
+    <div
+      class="max-w-3xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-ink-500">
+      <span>FegoName — Brand & Product Naming Utility for Freelancers</span>
+      <span>Live DNS verification across all domain extensions via Cloudflare DoH</span>
+    </div>
+  </footer>
+
+  <!-- UPGRADE MODAL -->
+  <div id="upgradeModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 modal-backdrop">
+    <div
+      class="bg-white border border-ink-200/90 rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[92vh] flex flex-col overflow-hidden">
+      <div
+        class="sticky top-0 z-20 bg-white px-6 sm:px-9 pt-6 sm:pt-8 pb-5 border-b border-ink-100/80 flex items-start justify-between">
+        <div class="pr-6">
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-ink-950 tracking-tight">
+            Unlock Fego<span class="text-teal-600">Name</span>
+          </h3>
+          <p id="upgradeModalSubtitle" class="text-xs sm:text-sm text-ink-600 mt-1 leading-relaxed">
+            Full unlimited access for freelancers providing naming services to clients.
+          </p>
+        </div>
+        <button type="button" onclick="closeModal('upgradeModal')"
+          class="text-ink-400 hover:text-ink-700 transition text-lg font-mono leading-none shrink-0 p-1">
+          ✕
+        </button>
+      </div>
+
+      <div class="px-6 sm:px-9 py-6 overflow-y-auto space-y-7">
+        <div class="space-y-3">
+          <label for="licenseInput" class="block text-xs font-semibold uppercase tracking-wider text-ink-700">
+            Already have a license code?
+          </label>
+          <div class="flex gap-2.5">
+            <input type="text" id="licenseInput" placeholder="Paste your license key"
+              class="flex-grow bg-canvas border border-ink-200 rounded-xl px-4 py-3 text-sm text-ink-950 placeholder-ink-400 focus:outline-none focus:border-teal-600 focus:bg-white transition font-mono shadow-2xs">
+            <button type="button" id="activateLicenseBtn" onclick="verifyLicense()"
+              class="px-5 py-3 rounded-xl bg-ink-950 hover:bg-black text-white text-sm font-semibold transition active:scale-95 shrink-0 border border-ink-800 shadow-xs">
+              Activate
+            </button>
+          </div>
+          <p id="licenseFeedback" class="text-xs mt-2 hidden"></p>
+        </div>
+
+        <div class="relative flex items-center justify-center my-6">
+          <div class="border-t border-ink-200/80 w-full"></div>
+          <span class="bg-white px-3 text-xs text-ink-400 font-medium uppercase tracking-wider">or</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="text-xs font-semibold uppercase tracking-wider text-ink-700 text-left">
+            Get License Code
+          </div>
+
+          <div
+            class="p-4 sm:p-5 rounded-2xl border border-ink-200 bg-white hover:border-ink-300 transition flex items-center justify-between gap-4 shadow-2xs">
+            <div>
+              <div class="text-base font-bold text-ink-950">Lifetime Deal</div>
+              <div class="text-xs sm:text-sm text-teal-800 font-semibold mt-0.5">Pay once · Unlimited access forever</div>
+            </div>
+            <a href="https://fegopics.gumroad.com/l/iwcjmr" target="_blank" rel="noopener"
+              class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold transition active:scale-95 shrink-0 shadow-xs flex items-center gap-1.5">
+              <span>Get Code</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROQ SETTINGS MODAL -->
+  <div id="settingsModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 modal-backdrop">
+    <div
+      class="bg-white border border-ink-200 rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[92vh] flex flex-col overflow-hidden">
+
+      <!-- Modal Header -->
+      <div
+        class="sticky top-0 z-20 bg-white px-6 sm:px-8 pt-6 sm:pt-7 pb-4 border-b border-ink-100/80 flex items-start justify-between">
+        <div class="pr-4">
+          <h3 class="text-2xl font-bold text-ink-950 tracking-tight">Groq AI API Key</h3>
+          <p id="settingsModalSubtitle" class="text-xs sm:text-sm text-ink-600 mt-1 leading-relaxed">
+            Run unlimited fast naming searches (14,400 free requests/day with zero queueing).
+          </p>
+        </div>
+        <button type="button" onclick="closeModal('settingsModal')"
+          class="text-ink-400 hover:text-ink-700 transition text-base font-mono shrink-0 p-1">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="px-6 sm:px-8 py-6 overflow-y-auto space-y-6">
+
+        <!-- Key Input Form -->
+        <div class="space-y-4">
+          <div>
+            <label for="groqKeyInput" class="block text-xs font-bold uppercase tracking-wider text-ink-900 mb-2">
+              Your Groq API Key
+            </label>
+            <input type="password" id="groqKeyInput" placeholder="gsk_..."
+              class="w-full bg-canvas border border-ink-200 rounded-xl px-4 py-3 text-xs sm:text-sm text-ink-950 focus:outline-none focus:border-teal-600 font-mono shadow-2xs">
+          </div>
+
+          <div class="flex items-center justify-between pt-1">
+            <button type="button" onclick="clearSavedKey()"
+              class="text-xs text-rose-600 hover:text-rose-800 hover:underline font-semibold transition">
+              Remove Key
+            </button>
+            <button type="button" onclick="saveUserGroqKey()"
+              class="px-5 py-2.5 rounded-xl bg-ink-950 hover:bg-black text-white text-xs sm:text-sm font-semibold transition active:scale-95 border border-ink-800">
+              Save Key
+            </button>
+          </div>
+        </div>
+
+        <!-- Visual 3-Step Guided Walkthrough with Screenshots -->
+        <div class="border-t border-ink-100 pt-5 text-left">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-ink-950 mb-3 flex items-center gap-1.5">
+            <span class="text-teal-600">⚡</span> Quick 3-Step Setup (Takes 30 seconds):
+          </h4>
+
+          <div class="space-y-4">
+            <!-- STEP 1 -->
+            <div class="bg-ink-50/70 border border-ink-200/80 rounded-2xl p-3 sm:p-4">
+              <div class="flex items-center justify-between text-xs font-semibold text-ink-900 mb-2">
+                <span>1. Open Groq & Sign in with Google</span>
+                <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer"
+                  class="text-teal-600 hover:underline inline-flex items-center gap-1 font-bold">
+                  console.groq.com/keys
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                  </svg>
+                </a>
+              </div>
+              <div class="border border-ink-200/80 rounded-xl overflow-hidden bg-white shadow-2xs">
+                <img src="media/step1-groq-login.png" alt="Step 1: Open Groq Console Keys"
+                  class="w-full h-auto object-cover max-h-32"
+                  onerror="this.parentElement.innerHTML='<div class=\'p-3 text-center text-xs text-ink-400 font-mono bg-ink-50\'>[Screenshot: console.groq.com/keys login]</div>'" />
+              </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="bg-ink-50/70 border border-ink-200/80 rounded-2xl p-3 sm:p-4">
+              <div class="text-xs font-semibold text-ink-900 mb-2">
+                2. Click <span class="text-teal-700 font-bold">"Create API Key"</span> and copy the key
+              </div>
+              <div class="border border-ink-200/80 rounded-xl overflow-hidden bg-white shadow-2xs">
+                <img src="media/step2-create-key.png" alt="Step 2: Create API Key and Copy"
+                  class="w-full h-auto object-cover max-h-32"
+                  onerror="this.parentElement.innerHTML='<div class=\'p-3 text-center text-xs text-ink-400 font-mono bg-ink-50\'>[Screenshot: Click Create API Key & Copy gsk_...]</div>'" />
+              </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="bg-ink-50/70 border border-ink-200/80 rounded-2xl p-3 sm:p-4">
+              <div class="text-xs font-semibold text-ink-900 mb-2">
+                3. Paste key (<code
+                  class="font-mono text-[11px] text-teal-800 bg-teal-50 px-1 py-0.5 rounded font-bold">gsk_...</code>)
+                into the box above & click <span class="text-teal-700 font-bold">Save Key</span>
+              </div>
+              <div class="border border-ink-200/80 rounded-xl overflow-hidden bg-white shadow-2xs">
+                <img src="media/step3-paste-key.png" alt="Step 3: Paste Key and Save"
+                  class="w-full h-auto object-cover max-h-32"
+                  onerror="this.parentElement.innerHTML='<div class=\'p-3 text-center text-xs text-ink-400 font-mono bg-ink-50\'>[Screenshot: Paste key into FegoName & Save]</div>'" />
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-4 text-[11px] text-ink-500 leading-relaxed">
+            * Your API key is saved solely inside your local browser (<code
+              class="font-mono text-[10px]">localStorage</code>) and is never stored on our database.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast"
+    class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-200 bg-ink-950 text-white px-4 py-2.5 rounded-xl shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2 border border-ink-800">
+    <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+    <span id="toastMessage">Copied</span>
+  </div>
+
+  <script>
+    const BACKEND_URL = "https://fegoname-api.zindvera.workers.dev";
+
+    const ALL_EXTENSIONS = [
+      'com', 'net', 'org', 'io', 'co', 'ai',
+      'app', 'dev', 'xyz', 'biz', 'info',
+      'online', 'site', 'tech'
+    ];
+
+    const MIN_REQUIRED_NAMES = 5;
+    const MAX_TARGET_NAMES = 10;
+    const MIN_WORD_COUNT = 8;
+    const MAX_FREE_SEARCHES_TOTAL = 3;
+
+    // Local Storage Keys
+    const LS_PRO = "fegoname_pro_active";
+    const LS_LICENSE = "fegoname_license_key";
+    const LS_LICENSE_STATUS = "fegoname_license_status";       // "active" | "invalid"
+    const LS_LICENSE_TIMESTAMP = "fegoname_license_timestamp"; // epoch ms
+    const LS_LIMIT_LOCKED = "fegoname_limit_locked_until";      // epoch ms (24h lock for 0 free quota)
+    const LS_PACKED_KEY = "fegoname_encoded_groq";
+
+    let activeModalId = null;
+    let cachedQuotaRemaining = 3;
+    let turnCounter = 0;
+
+    // State per turn block
+    const turnBlocks = new Map();
+
+    const threadContainer = document.getElementById('threadContainer');
+    const upgradeModal = document.getElementById('upgradeModal');
+    const upgradeModalSubtitle = document.getElementById('upgradeModalSubtitle');
+    const settingsModal = document.getElementById('settingsModal');
+    const settingsModalSubtitle = document.getElementById('settingsModalSubtitle');
+    const openUpgradeBtn = document.getElementById('openUpgradeBtn');
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const upgradeBtnLabel = document.getElementById('upgradeBtnLabel');
+    const licenseInput = document.getElementById('licenseInput');
+    const licenseFeedback = document.getElementById('licenseFeedback');
+    const groqKeyInput = document.getElementById('groqKeyInput');
+    const keyIndicatorDot = document.getElementById('keyIndicatorDot');
+    const keyStatusText = document.getElementById('keyStatusText');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    function packKey(raw) {
+      if (!raw) return "";
+      try {
+        const reversed = raw.split("").reverse().join("");
+        return btoa("FEGO:" + reversed);
+      } catch (e) {
+        return btoa(raw);
+      }
+    }
+
+    function unpackKey(packed) {
+      if (!packed) return "";
+      try {
+        const decoded = atob(packed);
+        if (decoded.startsWith("FEGO:")) {
+          return decoded.replace("FEGO:", "").split("").reverse().join("");
+        }
+        return decoded;
+      } catch (e) {
+        return "";
+      }
+    }
+
+    function countWords(str) {
+      if (!str) return 0;
+      const matches = str.trim().match(/\b\S+\b/g);
+      return matches ? matches.length : 0;
+    }
+
+    function updateWordCountDisplay(inputEl, labelEl) {
+      const words = countWords(inputEl.value);
+      if (words === 0) {
+        labelEl.textContent = `0 words (minimum ${MIN_WORD_COUNT} required)`;
+        labelEl.className = "text-ink-500 font-medium";
+      } else if (words < MIN_WORD_COUNT) {
+        labelEl.textContent = `${words}/${MIN_WORD_COUNT} words (add ${MIN_WORD_COUNT - words} more)`;
+        labelEl.className = "text-amber-600 font-semibold";
+      } else {
+        labelEl.textContent = `${words} words (ready)`;
+        labelEl.className = "text-teal-700 font-semibold";
+      }
+    }
+
+    function updateGroqKeyUI() {
+      const savedKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
+      if (savedKey && savedKey.startsWith("gsk_")) {
+        keyIndicatorDot.classList.replace("bg-ink-300", "bg-teal-500");
+        keyStatusText.textContent = "Key Set";
+        if (groqKeyInput) groqKeyInput.value = savedKey;
+      } else {
+        keyIndicatorDot.classList.replace("bg-teal-500", "bg-ink-300");
+        keyStatusText.textContent = "AI Key";
+      }
+    }
+
+   
+   function updateAllQuotaPills() {
+      const isPro = localStorage.getItem(LS_PRO) === "true";
+      const savedKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
+      const pills = document.querySelectorAll('.freeTrialPill');
+
+      pills.forEach(pill => {
+        if (isPro) {
+          pill.textContent = "";
+          pill.className = "freeTrialPill hidden";
+        } else if (savedKey && savedKey.startsWith("gsk_")) {
+          pill.textContent = "Custom Key Active";
+          pill.className = "freeTrialPill font-medium text-teal-700 font-mono text-xs";
+        } else {
+          const statusStr = cachedQuotaRemaining > 0 ? `${cachedQuotaRemaining} free searches remaining` : `0 free searches left`;
+          const statusClass = cachedQuotaRemaining > 0 ? "freeTrialPill font-medium text-ink-600" : "freeTrialPill font-semibold text-rose-600";
+          pill.textContent = statusStr;
+          pill.className = statusClass;
+          pill.classList.remove('hidden');
+        }
+      });
+      updateGroqKeyUI();
+    }
+
+    function applyProUI() {
+      localStorage.setItem(LS_PRO, "true");
+      openSettingsBtn.classList.remove("hidden");
+      openSettingsBtn.classList.add("flex");
+
+      upgradeBtnLabel.textContent = "Pro Active";
+      openUpgradeBtn.classList.replace("bg-ink-950", "bg-teal-700");
+      openUpgradeBtn.classList.replace("hover:bg-black", "hover:bg-teal-800");
+
+      updateAllQuotaPills();
+    }
+
+    async function applyFreeUI(liveRemaining = null) {
+      localStorage.setItem(LS_PRO, "false");
+      openSettingsBtn.classList.add("hidden");
+      openSettingsBtn.classList.remove("flex");
+
+      upgradeBtnLabel.textContent = "Upgrade";
+      openUpgradeBtn.classList.replace("bg-teal-700", "bg-ink-950");
+      openUpgradeBtn.classList.replace("hover:bg-teal-800", "hover:bg-black");
+
+      const now = Date.now();
+      const lockedUntil = parseInt(localStorage.getItem(LS_LIMIT_LOCKED) || "0", 10);
+
+      if (now < lockedUntil && liveRemaining === null) {
+        cachedQuotaRemaining = 0;
+        updateAllQuotaPills();
+        return;
+      }
+
+      let remaining = liveRemaining;
+      if (remaining === null) {
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/quota-status`);
+          if (res.ok) {
+            const data = await res.json();
+            if (typeof data.remaining === "number") {
+              remaining = data.remaining;
+            }
+          }
+        } catch (e) {
+          remaining = 3;
+        }
+      }
+
+      if (remaining === null) remaining = 3;
+      cachedQuotaRemaining = remaining;
+
+      if (cachedQuotaRemaining <= 0) {
+        const lockExpiry = now + (24 * 60 * 60 * 1000);
+        localStorage.setItem(LS_LIMIT_LOCKED, lockExpiry.toString());
+      } else {
+        localStorage.removeItem(LS_LIMIT_LOCKED);
+      }
+
+      updateAllQuotaPills();
+    }
+
+    async function syncBackendQuota(liveRemaining = null) {
+      const savedLicense = localStorage.getItem(LS_LICENSE);
+      const licenseStatus = localStorage.getItem(LS_LICENSE_STATUS);
+      const licenseTime = parseInt(localStorage.getItem(LS_LICENSE_TIMESTAMP) || "0", 10);
+      const now = Date.now();
+
+      const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+      const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+      if (savedLicense) {
+        if (licenseStatus === "active" && (now - licenseTime < ONE_DAY_MS)) {
+          applyProUI();
+          return;
+        }
+        if (licenseStatus === "invalid" && (now - licenseTime < THIRTY_DAYS_MS)) {
+          applyFreeUI(liveRemaining);
+          return;
+        }
+        if (licenseStatus === "active" && (now - licenseTime >= ONE_DAY_MS)) {
+          try {
+            const res = await fetch(`${BACKEND_URL}/api/verify-license`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ license_key: savedLicense })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (res.ok && data.success) {
+              localStorage.setItem(LS_LICENSE_STATUS, "active");
+              localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+              applyProUI();
+              return;
+            } else {
+              localStorage.setItem(LS_PRO, "false");
+              localStorage.setItem(LS_LICENSE_STATUS, "invalid");
+              localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+            }
+          } catch (e) {
+            applyProUI();
+            return;
+          }
+        }
+      }
+
+      applyFreeUI(liveRemaining);
+    }
+
+    async function checkDomainAvailability(domain) {
+      try {
+        const response = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=A`, {
+          headers: { 'Accept': 'application/dns-json' }
+        });
+        if (!response.ok) return { domain, available: true };
+        const data = await response.json();
+        const hasAnswers = Array.isArray(data.Answer) && data.Answer.length > 0;
+        return { domain, available: !hasAnswers };
+      } catch (e) {
+        return { domain, available: true };
+      }
+    }
+
+    /**
+     * Stop Generation for a Specific Turn Block
+     */
+    window.stopTurnGeneration = function (turnId) {
+      const state = turnBlocks.get(turnId);
+      if (!state || !state.isProcessing) return;
+
+      state.isAborted = true;
+      if (state.abortController) {
+        try {
+          state.abortController.abort();
+        } catch (e) {}
+      }
+
+      const statusMessage = document.getElementById(`statusMessage-${turnId}`);
+      if (statusMessage) {
+        statusMessage.textContent = "Halting search...";
+      }
+      showToast("Generation stopped");
+    };
+
+    /**
+     * Create and append a new search turn block to the feed
+     */
+    function appendNewSearchTurn() {
+      turnCounter++;
+      const turnId = turnCounter;
+
+      const state = {
+        id: turnId,
+        mode: "brand",
+        results: [],
+        evaluatedNames: new Set(),
+        isProcessing: false,
+        hasGeneratedOnce: false,
+        abortController: null,
+        isAborted: false
+      };
+      turnBlocks.set(turnId, state);
+
+      const section = document.createElement('div');
+      section.id = `turn-${turnId}`;
+      section.className = "turn-block space-y-6 pt-4";
+
+      section.innerHTML = `
+        <!-- Turn Header / Mode Selector -->
+        <div class="flex items-center justify-between border-b border-ink-200/80 pb-3">
+          <div class="flex items-center gap-6">
+            <button type="button" id="tabBrand-${turnId}" onclick="switchTurnMode(${turnId}, 'brand')"
+              class="pb-1 px-1 text-sm sm:text-base font-bold border-b-2 border-teal-600 text-teal-700 transition-colors">
+              Brand Name
+            </button>
+            <button type="button" id="tabProduct-${turnId}" onclick="switchTurnMode(${turnId}, 'product')"
+              class="pb-1 px-1 text-sm sm:text-base font-medium border-b-2 border-transparent text-ink-500 hover:text-ink-950 transition-colors">
+              Product Name
+            </button>
+          </div>
+        </div>
+
+        <!-- Input Card -->
+        <section class="bg-white border border-ink-200/90 rounded-2xl p-5 sm:p-7 shadow-sm transition hover:shadow-md">
+          <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-ink-100">
+            <label id="inputLabel-${turnId}" for="descriptionInput-${turnId}"
+              class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-ink-900">
+              Describe what the business does
+            </label>
+            <button type="button" onclick="loadTurnSample(${turnId})"
+              class="text-xs sm:text-sm text-teal-600 hover:text-teal-800 hover:underline font-semibold transition">
+              Load sample brief
+            </button>
+          </div>
+
+          <form id="namingForm-${turnId}" onsubmit="handleTurnSubmit(event, ${turnId})" class="space-y-4">
+            <div>
+              <textarea id="descriptionInput-${turnId}" rows="3" required
+                placeholder="e.g. A boutique cold-brew coffee brand for remote software engineers who need calm, sustained morning focus without jitters."
+                class="w-full bg-canvas border border-ink-200 rounded-xl p-3.5 sm:p-4 text-base text-ink-950 placeholder-ink-400 focus:outline-none focus:border-teal-600 focus:ring-1 focus:ring-teal-600 focus:bg-white transition resize-none leading-relaxed"></textarea>
+
+              <div class="mt-2.5 flex items-center justify-between text-xs">
+                <span id="wordCountLabel-${turnId}" class="text-ink-500 font-medium">0 words (minimum ${MIN_WORD_COUNT} required)</span>
+                <span class="freeTrialPill font-medium text-ink-600">3 free searches remaining</span>
+              </div>
+            </div>
+
+            <!-- Submit and Single Stop Button Bar -->
+            <div class="flex items-center gap-2.5">
+              <button type="submit" id="generateBtn-${turnId}"
+                class="flex-1 py-3.5 px-6 rounded-xl bg-ink-950 hover:bg-black text-white text-base font-semibold tracking-wide transition shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99] border border-ink-800">
+                <span id="btnIcon-${turnId}" class="text-teal-400 font-bold">→</span>
+                <span id="btnText-${turnId}">Suggest Unique Names</span>
+              </button>
+              <button type="button" id="stopBtn-${turnId}" onclick="stopTurnGeneration(${turnId})"
+                class="hidden py-3.5 px-5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-base font-semibold tracking-wide transition shadow-sm items-center justify-center gap-2 active:scale-[0.99]">
+                <span class="w-2.5 h-2.5 bg-white rounded-xs"></span>
+                <span>Stop</span>
+              </button>
+            </div>
+          </form>
+
+          <div id="statusBox-${turnId}"
+            class="hidden mt-4 pt-3.5 border-t border-ink-100 text-sm text-ink-700 flex items-center gap-3">
+            <svg class="animate-spin h-4 w-4 text-teal-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+            <span id="statusMessage-${turnId}" class="font-medium text-ink-800">Brainstorming unique coined candidates...</span>
+          </div>
+        </section>
+
+        <!-- Dedicated Results Section for This Block -->
+        <section id="resultsSection-${turnId}" class="hidden mt-6 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-ink-200">
+            <h3 id="resultsHeader-${turnId}" class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-ink-900">
+              Available Brand Names
+            </h3>
+            <span id="resultCountBadge-${turnId}"
+              class="text-xs sm:text-sm font-mono text-teal-700 bg-teal-50 border border-teal-200/80 px-2.5 py-0.5 rounded-md font-semibold">
+              0 available
+            </span>
+          </div>
+
+          <div id="resultsList-${turnId}" class="space-y-4"></div>
+
+          <!-- Replenishment Indicator Box -->
+          <div id="replenishBox-${turnId}"
+            class="hidden p-4 bg-teal-50/60 border border-dashed border-teal-300 rounded-2xl flex items-center justify-between text-xs sm:text-sm text-teal-900 shadow-xs">
+            <div class="flex items-center gap-2.5">
+              <svg class="animate-spin h-4 w-4 text-teal-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+              </svg>
+              <span id="replenishText-${turnId}">Verifying all domain extensions & coining more names...</span>
+            </div>
+            <span id="replenishCount-${turnId}" class="font-mono text-teal-700 text-sm font-bold">0/5</span>
+          </div>
+
+          <!-- Local Load More Container -->
+          <div id="loadMoreContainer-${turnId}" class="hidden pt-4 pb-2 border-t border-ink-200/80 text-center">
+            <button type="button" onclick="handleTurnLoadMoreClick(${turnId})"
+              class="inline-flex items-center justify-center gap-2 text-base font-bold text-teal-600 hover:text-teal-800 hover:underline transition py-2 px-4 rounded-xl">
+              <svg id="loadMoreSpinner-${turnId}" class="hidden animate-spin h-5 w-5 text-teal-600 shrink-0"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+              </svg>
+              <span id="loadMoreText-${turnId}">+ Load More Unique Names</span>
+            </button>
+            <div id="totalFoundBadge-${turnId}" class="text-ink-400 font-mono text-xs mt-1"></div>
+          </div>
+        </section>
+      `;
+
+      threadContainer.appendChild(section);
+
+      const textarea = document.getElementById(`descriptionInput-${turnId}`);
+      const wordCountLabel = document.getElementById(`wordCountLabel-${turnId}`);
+      textarea.addEventListener('input', () => updateWordCountDisplay(textarea, wordCountLabel));
+
+      updateAllQuotaPills();
+      return turnId;
+    }
+
+    window.switchTurnMode = function (turnId, mode) {
+      const state = turnBlocks.get(turnId);
+      if (!state) return;
+      state.mode = mode;
+
+      const tabBrand = document.getElementById(`tabBrand-${turnId}`);
+      const tabProduct = document.getElementById(`tabProduct-${turnId}`);
+      const inputLabel = document.getElementById(`inputLabel-${turnId}`);
+      const textarea = document.getElementById(`descriptionInput-${turnId}`);
+      const resultsHeader = document.getElementById(`resultsHeader-${turnId}`);
+
+      const activeClass = "pb-1 px-1 text-sm sm:text-base font-bold border-b-2 border-teal-600 text-teal-700 transition-colors";
+      const inactiveClass = "pb-1 px-1 text-sm sm:text-base font-medium border-b-2 border-transparent text-ink-500 hover:text-ink-950 transition-colors";
+
+      if (mode === 'brand') {
+        tabBrand.className = activeClass;
+        tabProduct.className = inactiveClass;
+        inputLabel.textContent = "Describe what the business does";
+        textarea.placeholder = "e.g. A boutique cold-brew coffee brand for remote software engineers who need calm, sustained morning focus without jitters.";
+        if (resultsHeader) resultsHeader.textContent = "Available Brand Names";
+      } else {
+        tabProduct.className = activeClass;
+        tabBrand.className = inactiveClass;
+        inputLabel.textContent = "Describe what the product does";
+        textarea.placeholder = "e.g. A lightweight Figma plugin that exports vector assets directly into clean, copy-paste Tailwind React components.";
+        if (resultsHeader) resultsHeader.textContent = "Available Product Names";
+      }
+    };
+
+    window.loadTurnSample = function (turnId) {
+      const state = turnBlocks.get(turnId);
+      if (!state) return;
+      const textarea = document.getElementById(`descriptionInput-${turnId}`);
+      const wordCountLabel = document.getElementById(`wordCountLabel-${turnId}`);
+
+      if (state.mode === 'brand') {
+        textarea.value = "A boutique cold-brew coffee brand for remote software engineers who need calm, sustained morning focus without jitters.";
+      } else {
+        textarea.value = "A lightweight Figma plugin that exports vector assets directly into clean, copy-paste Tailwind React components.";
+      }
+      updateWordCountDisplay(textarea, wordCountLabel);
+    };
+
+    window.handleTurnSubmit = function (e, turnId) {
+      e.preventDefault();
+      runTurnGeneration(turnId, false);
+    };
+
+    window.handleTurnLoadMoreClick = function (turnId) {
+      const isPro = localStorage.getItem(LS_PRO) === "true";
+      const userKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
+
+      if (!isPro) {
+        upgradeModalSubtitle.textContent = "Unlock Pro to load unlimited batches.";
+        openModal('upgradeModal');
+        return;
+      }
+
+      if (!userKey || !userKey.startsWith("gsk_")) {
+        settingsModalSubtitle.textContent = "Please enter your free Groq API key to load more unique names.";
+        openModal('settingsModal');
+        return;
+      }
+
+      runTurnGeneration(turnId, true);
+    };
+
+    /**
+     * Generation Engine for a Specific Turn Block
+     */
+    async function runTurnGeneration(turnId, isAppend = false) {
+      const state = turnBlocks.get(turnId);
+      if (!state || state.isProcessing) return;
+
+      const textarea = document.getElementById(`descriptionInput-${turnId}`);
+      const description = textarea.value.trim();
+      const words = countWords(description);
+
+      if (!description) return;
+
+      if (words < MIN_WORD_COUNT) {
+        showToast(`Please write at least ${MIN_WORD_COUNT} words`);
+        textarea.focus();
+        return;
+      }
+
+      const isPro = localStorage.getItem(LS_PRO) === "true";
+      const userKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
+      const savedLicense = localStorage.getItem(LS_LICENSE) || "";
+      const licenseStatus = localStorage.getItem(LS_LICENSE_STATUS);
+
+      // PRO CHECK: Pro users MUST provide their own Groq API key (never uses server key)
+      if (isPro) {
+        if (!userKey || !userKey.startsWith("gsk_")) {
+          showToast("Pro mode requires your free Groq API key.");
+          settingsModalSubtitle.textContent = "Please enter your free Groq API key to run unlimited Pro searches.";
+          openModal('settingsModal');
+          return;
+        }
+      } else {
+        // Free user quota check
+        const lockedUntil = parseInt(localStorage.getItem(LS_LIMIT_LOCKED) || "0", 10);
+        if (!userKey && Date.now() < lockedUntil) {
+          upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro or add your Groq key.`;
+          openModal('upgradeModal');
+          return;
+        }
+      }
+
+      state.isProcessing = true;
+      state.isAborted = false;
+      state.abortController = new AbortController();
+
+      const generateBtn = document.getElementById(`generateBtn-${turnId}`);
+      const stopBtn = document.getElementById(`stopBtn-${turnId}`);
+      const btnIcon = document.getElementById(`btnIcon-${turnId}`);
+      const btnText = document.getElementById(`btnText-${turnId}`);
+      const statusBox = document.getElementById(`statusBox-${turnId}`);
+      const statusMessage = document.getElementById(`statusMessage-${turnId}`);
+      const resultsSection = document.getElementById(`resultsSection-${turnId}`);
+      const resultsList = document.getElementById(`resultsList-${turnId}`);
+      const resultCountBadge = document.getElementById(`resultCountBadge-${turnId}`);
+      const replenishBox = document.getElementById(`replenishBox-${turnId}`);
+      const replenishText = document.getElementById(`replenishText-${turnId}`);
+      const replenishCount = document.getElementById(`replenishCount-${turnId}`);
+      const loadMoreContainer = document.getElementById(`loadMoreContainer-${turnId}`);
+      const loadMoreSpinner = document.getElementById(`loadMoreSpinner-${turnId}`);
+      const loadMoreText = document.getElementById(`loadMoreText-${turnId}`);
+      const totalFoundBadge = document.getElementById(`totalFoundBadge-${turnId}`);
+
+      if (!isAppend) {
+        resultsList.innerHTML = "";
+        state.evaluatedNames.clear();
+        state.results = [];
+        resultsSection.classList.remove('hidden');
+        loadMoreContainer.classList.add('hidden');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        loadMoreSpinner.classList.remove('hidden');
+        loadMoreText.textContent = "Verifying more unique names...";
+      }
+
+      generateBtn.disabled = true;
+      btnIcon.textContent = "·";
+      btnText.textContent = isAppend ? "Finding more..." : "Generating...";
+
+      // Reveal Stop Button right next to CTA button
+      if (stopBtn) {
+        stopBtn.classList.remove('hidden');
+        stopBtn.classList.add('flex');
+      }
+
+      statusBox.classList.remove('hidden');
+      statusMessage.textContent = "Prompting Groq AI to coin untaken names...";
+      replenishBox.classList.add('hidden');
+
+      let batchAdded = 0;
+      let round = 1;
+      const MAX_SEARCH_LOOPS = 5;
+
+      try {
+        const route = state.mode === 'brand' ? 'brand-name' : 'product-name';
+        const endpoint = `${BACKEND_URL}/api/process/${route}`;
+        const headers = { "Content-Type": "application/json" };
+
+        if (isPro && savedLicense && licenseStatus === "active") {
+          headers["x-license-key"] = savedLicense;
+        }
+        if (userKey && userKey.startsWith("gsk_")) {
+          headers["x-groq-key"] = userKey;
+        }
+
+        while (batchAdded < MIN_REQUIRED_NAMES && round <= MAX_SEARCH_LOOPS) {
+          if (state.isAborted) break;
+
+          replenishBox.classList.remove('hidden');
+          replenishText.textContent = `Verified ${batchAdded}/${MIN_REQUIRED_NAMES} names with zero registered domain extensions. Coining more...`;
+          replenishCount.textContent = `${batchAdded}/${MIN_REQUIRED_NAMES}`;
+          statusMessage.textContent = `Harvesting untaken candidates (batch ${round})...`;
+
+          const excludeList = Array.from(state.evaluatedNames);
+          const isInternalAppend = isAppend || (round > 1);
+
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: headers,
+            signal: state.abortController.signal,
+            body: JSON.stringify({
+              idea: description,
+              excludeList: excludeList,
+              isAppend: isInternalAppend,
+              isReplenish: round > 1, // Only round 1 consumes IP quota
+              count: 20
+            })
+          });
+
+          if (state.isAborted) break;
+
+          // Rate limit reached for free IP
+          if (res.status === 403) {
+            const lockExpiry = Date.now() + (24 * 60 * 60 * 1000);
+            localStorage.setItem(LS_LIMIT_LOCKED, lockExpiry.toString());
+            syncBackendQuota(0);
+            upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro or add your Groq key.`;
+            openModal('upgradeModal');
+            throw new Error("Free trial limit reached. Unlock Pro or add your Groq key.");
+          }
+
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            const errMsg = errData.error || errData.message || `Server error ${res.status}`;
+
+            // Check if key is expired, invalid, or unauthorized
+            const lowerErr = errMsg.toLowerCase();
+            if (res.status === 401 || lowerErr.includes("api key") || lowerErr.includes("groq") || lowerErr.includes("unauthorized") || lowerErr.includes("invalid_api_key")) {
+              localStorage.removeItem(LS_PACKED_KEY);
+              if (groqKeyInput) groqKeyInput.value = "";
+              updateGroqKeyUI();
+              updateAllQuotaPills();
+
+              settingsModalSubtitle.textContent = "Your Groq API key is expired or invalid. Please paste a valid key below.";
+              openModal('settingsModal');
+              throw new Error("Your Groq API key is invalid or expired. Please update it.");
+            }
+
+            throw new Error(errMsg);
+          }
+
+          const data = await res.json();
+          const candidates = Array.isArray(data) ? data : (data.names || []);
+
+          if (!candidates || candidates.length === 0) {
+            round++;
+            continue;
+          }
+
+          for (const item of candidates) {
+            if (state.isAborted || batchAdded >= MAX_TARGET_NAMES) break;
+
+            const cleanName = item.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (!cleanName || state.evaluatedNames.has(cleanName)) continue;
+            state.evaluatedNames.add(cleanName);
+
+            statusMessage.textContent = `Checking ${cleanName} across all domain extensions...`;
+
+            const domainChecks = await Promise.all(
+              ALL_EXTENSIONS.map(ext => checkDomainAvailability(`${cleanName}.${ext}`))
+            );
+
+            if (state.isAborted) break;
+
+            const noneTakenAtAll = domainChecks.every(d => d.available);
+
+            if (noneTakenAtAll) {
+              const entry = { ...item, cleanName, domainChecks, allExtensionsUntaken: true };
+              state.results.push(entry);
+              renderCardIntoTurn(entry, resultsList);
+              batchAdded++;
+
+              resultCountBadge.textContent = `${state.results.length} available`;
+              replenishCount.textContent = `${batchAdded}/${MIN_REQUIRED_NAMES}`;
+
+              if (batchAdded >= MAX_TARGET_NAMES) break;
+            }
+          }
+
+          round++;
+        }
+
+        replenishBox.classList.add('hidden');
+
+        if (state.results.length === 0 && !state.isAborted) {
+          resultsList.innerHTML = `<div class="p-6 text-center text-sm text-ink-500 bg-white border border-dashed border-ink-200 rounded-2xl">No untaken names found in this batch. Please refine your brief or retry.</div>`;
+        } else if (state.results.length > 0) {
+          totalFoundBadge.textContent = `${state.results.length} untaken names verified`;
+          loadMoreContainer.classList.remove('hidden');
+
+          // Append next search turn if this block just completed its first generation
+          if (!state.hasGeneratedOnce) {
+            state.hasGeneratedOnce = true;
+            appendNewSearchTurn();
+          }
+        }
+
+        syncBackendQuota();
+
+      } catch (err) {
+        if (err.name === 'AbortError' || state.isAborted) {
+          // Handled gracefully as manual stop
+        } else {
+          console.error(err);
+          showToast(err.message || "Failed to generate names");
+        }
+      } finally {
+        generateBtn.disabled = false;
+        btnIcon.textContent = "→";
+        btnText.textContent = state.hasGeneratedOnce ? "Update Names" : "Suggest Unique Names";
+
+        // Hide Stop Button
+        if (stopBtn) {
+          stopBtn.classList.remove('flex');
+          stopBtn.classList.add('hidden');
+        }
+
+        statusBox.classList.add('hidden');
+        replenishBox.classList.add('hidden');
+        loadMoreSpinner.classList.add('hidden');
+        loadMoreText.textContent = "+ Load More Unique Names";
+        state.isProcessing = false;
+        state.abortController = null;
+      }
+    }
+
+    function renderCardIntoTurn(item, containerEl) {
+      const card = document.createElement('div');
+      card.className = "bg-white border border-ink-200 rounded-2xl p-6 sm:p-7 transition hover:border-teal-300 shadow-sm space-y-4";
+
+      const domainSearchUrl = `https://www.namecheap.com/domains/registration/results/?domain=${encodeURIComponent(item.cleanName + '.com')}`;
+      const googleSearchUrl = `https://www.google.com/search?q=allintitle:%22${encodeURIComponent(item.name)}%22`;
+
+      let cleanDesc = (item.meaning || item.rationale || "Artisanal coined name crafted for memorable acoustic rhythm and category recall.")
+        .replace(/^(Concept:\s*|Description:\s*)/i, '');
+
+      card.innerHTML = `
+        <div class="flex items-center justify-between gap-4 pb-1">
+          <div class="flex items-center gap-2.5">
+            <h4 class="text-2xl sm:text-3xl font-extrabold text-ink-950 tracking-tight">${item.name}</h4>
+            <button 
+              onclick="copyText('${item.name}', 'Name')" 
+              title="Copy name"
+              class="text-xs font-semibold text-ink-700 hover:text-ink-950 bg-ink-100 hover:bg-ink-200 px-2.5 py-1 rounded-md transition">
+              Copy
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <a 
+              href="${googleSearchUrl}" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center text-xs sm:text-sm font-semibold text-ink-800 hover:text-ink-950 bg-white hover:bg-ink-100 border border-ink-200 px-3.5 py-2 rounded-xl transition shadow-xs">
+              Google Check
+            </a>
+            <a 
+              href="${domainSearchUrl}" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center text-xs sm:text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 px-4 py-2 rounded-xl transition shadow-xs">
+              Domain Check
+            </a>
+          </div>
+        </div>
+
+        <div class="w-full text-sm sm:text-base text-ink-700 leading-relaxed pt-1">
+          ${cleanDesc}
+        </div>
+
+        <div class="pt-4 border-t border-ink-100 flex items-center justify-between gap-2.5 text-xs sm:text-sm">
+          <div class="flex items-center gap-2 text-teal-800 font-semibold">
+            <svg class="w-4 h-4 text-teal-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Untaken across all domain extensions</span>
+          </div>
+          <button 
+            onclick="copyText('${item.name}: ${cleanDesc.replace(/'/g, "\\'")}', 'Pitch')"
+            class="text-xs text-ink-500 hover:text-teal-700 font-medium transition">
+            Copy Pitch for Client
+          </button>
+        </div>
+      `;
+
+      containerEl.appendChild(card);
+    }
+
+    /**
+     * Manual License Verification
+     */
+    window.verifyLicense = async function () {
+      const key = licenseInput.value.trim();
+      if (!key) return;
+
+      const btn = document.getElementById('activateLicenseBtn');
+      btn.disabled = true;
+      btn.textContent = "...";
+      licenseFeedback.className = "text-xs mt-2 text-ink-500";
+      licenseFeedback.textContent = "Verifying license with Gumroad...";
+      licenseFeedback.classList.remove('hidden');
+
+      const now = Date.now();
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/api/verify-license`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ license_key: key })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.success) {
+          localStorage.setItem(LS_PRO, "true");
+          localStorage.setItem(LS_LICENSE, key);
+          localStorage.setItem(LS_LICENSE_STATUS, "active");
+          localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+          localStorage.removeItem(LS_LIMIT_LOCKED);
+
+          licenseFeedback.className = "text-xs mt-2 text-teal-700 font-semibold";
+          licenseFeedback.textContent = "License activated successfully! Pro is active.";
+
+          applyProUI();
+          setTimeout(() => {
+            closeModal('upgradeModal');
+            // If Groq key not set yet, immediately prompt them to add their free Groq key
+            const savedKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
+            if (!savedKey || !savedKey.startsWith("gsk_")) {
+              settingsModalSubtitle.textContent = "Pro unlocked! Now paste your free Groq API key to start naming.";
+              openModal('settingsModal');
+            }
+          }, 1000);
+        } else {
+          localStorage.setItem(LS_PRO, "false");
+          localStorage.setItem(LS_LICENSE, key);
+          localStorage.setItem(LS_LICENSE_STATUS, "invalid");
+          localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+
+          licenseFeedback.className = "text-xs mt-2 text-rose-600 font-semibold";
+          licenseFeedback.textContent = data.error || data.message || "Invalid or inactive license key.";
+          applyFreeUI();
+        }
+      } catch (err) {
+        licenseFeedback.className = "text-xs mt-2 text-rose-600 font-semibold";
+        licenseFeedback.textContent = "Unable to reach verification server.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Activate";
+      }
+    };
+
+    window.saveUserGroqKey = function () {
+      const key = groqKeyInput.value.trim();
+      if (!key || !key.startsWith("gsk_")) {
+        showToast("Please enter a valid Groq key (starts with gsk_)");
+        return;
+      }
+      localStorage.setItem(LS_PACKED_KEY, packKey(key));
+      updateGroqKeyUI();
+      updateAllQuotaPills();
+      syncBackendQuota();
+      showToast("Groq key saved successfully!");
+      closeModal('settingsModal');
+    };
+
+    window.clearSavedKey = function () {
+      localStorage.removeItem(LS_PACKED_KEY);
+      if (groqKeyInput) groqKeyInput.value = "";
+      updateGroqKeyUI();
+      updateAllQuotaPills();
+      syncBackendQuota();
+      showToast("Key removed");
+      closeModal('settingsModal');
+    };
+
+    window.copyText = function (text, label = "Item") {
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      try {
+        document.execCommand('copy');
+        showToast(`Copied ${label}`);
+      } catch (err) {
+        showToast('Failed to copy');
+      }
+      document.body.removeChild(el);
+    };
+
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2200);
+    }
+
+    function triggerFreelancerHighlightAnimation() {
+      setTimeout(() => {
+        const container = document.getElementById('freelancerHighlight');
+        const path = document.getElementById('penPath');
+        if (!container || !path) return;
+
+        container.classList.add('highlight-pop');
+
+        setTimeout(() => {
+          path.classList.add('drawn');
+        }, 150);
+
+        setTimeout(() => {
+          path.classList.add('fade-out');
+        }, 1400);
+
+        setTimeout(() => {
+          container.classList.remove('highlight-pop');
+          setTimeout(() => {
+            path.classList.remove('drawn', 'fade-out');
+          }, 600);
+        }, 1650);
+      }, 2400);
+    }
+
+    function init() {
+      syncBackendQuota();
+
+      // Mount the initial search block
+      appendNewSearchTurn();
+
+      openUpgradeBtn.addEventListener('click', () => {
+        upgradeModalSubtitle.textContent = "Full unlimited access for freelancers providing naming services to clients.";
+        openModal('upgradeModal');
+      });
+
+      openSettingsBtn.addEventListener('click', () => {
+        settingsModalSubtitle.textContent = "Run unlimited fast naming searches (14,400 free requests/day with zero queueing).";
+        openModal('settingsModal');
+      });
+
+      window.addEventListener('popstate', () => {
+        if (activeModalId) {
+          closeModal(activeModalId, false);
+        }
+      });
+    }
+
+    window.openModal = function (id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      activeModalId = id;
+      history.pushState({ modalOpen: id }, "");
+    };
+
+    window.closeModal = function (id, triggerBack = true) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      if (activeModalId === id) {
+        activeModalId = null;
+        if (triggerBack && history.state && history.state.modalOpen) {
+          history.back();
+        }
+      }
+    };
+
+    init();
+    triggerFreelancerHighlightAnimation();
+  </script>
+</body>
+
+</html>
