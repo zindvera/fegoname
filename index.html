@@ -421,7 +421,7 @@
   </div>
 
   <script>
-    const BACKEND_URL = "https://fegoname-api.zindvera.workers.dev";
+    const BACKEND_URL = "https://fegoname-api.fegoname-ai.workers.dev";
 
     const ALL_EXTENSIONS = [
       'com', 'net', 'org', 'io', 'co', 'ai',
@@ -768,29 +768,22 @@
         </section>
 
         <section id="resultsSection-${turnId}" class="hidden mt-6 space-y-4">
-          <div class="flex items-center justify-between pb-3 border-b border-ink-200">
+          <div class="pb-3 border-b border-ink-200">
             <h3 id="resultsHeader-${turnId}" class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-ink-900">
               Available Brand Names
             </h3>
-            <span id="resultCountBadge-${turnId}"
-              class="text-xs sm:text-sm font-mono text-teal-700 bg-teal-50 border border-teal-200/80 px-2.5 py-0.5 rounded-md font-semibold">
-              0 available
-            </span>
           </div>
 
           <div id="resultsList-${turnId}" class="space-y-4"></div>
 
           <div id="replenishBox-${turnId}"
-            class="hidden p-4 bg-teal-50/60 border border-dashed border-teal-300 rounded-2xl flex items-center justify-between text-xs sm:text-sm text-teal-900 shadow-xs">
-            <div class="flex items-center gap-2.5">
-              <svg class="animate-spin h-4 w-4 text-teal-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-              </svg>
-              <span id="replenishText-${turnId}">Verifying all domain extensions & coining more names...</span>
-            </div>
-            <span id="replenishCount-${turnId}" class="font-mono text-teal-700 text-sm font-bold">0/5</span>
+            class="hidden p-4 bg-teal-50/60 border border-dashed border-teal-300 rounded-2xl flex items-center gap-2.5 text-xs sm:text-sm text-teal-900 shadow-xs">
+            <svg class="animate-spin h-4 w-4 text-teal-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+            <span id="replenishText-${turnId}">Creating unique names & checking domain extensions...</span>
           </div>
 
           <div id="loadMoreContainer-${turnId}" class="hidden pt-4 pb-2 border-t border-ink-200/80 text-center">
@@ -934,10 +927,8 @@
       const statusMessage = document.getElementById(`statusMessage-${turnId}`);
       const resultsSection = document.getElementById(`resultsSection-${turnId}`);
       const resultsList = document.getElementById(`resultsList-${turnId}`);
-      const resultCountBadge = document.getElementById(`resultCountBadge-${turnId}`);
       const replenishBox = document.getElementById(`replenishBox-${turnId}`);
       const replenishText = document.getElementById(`replenishText-${turnId}`);
-      const replenishCount = document.getElementById(`replenishCount-${turnId}`);
       const loadMoreContainer = document.getElementById(`loadMoreContainer-${turnId}`);
       const loadMoreSpinner = document.getElementById(`loadMoreSpinner-${turnId}`);
       const loadMoreText = document.getElementById(`loadMoreText-${turnId}`);
@@ -960,12 +951,12 @@
       btnText.textContent = isAppend ? "Finding more..." : "Generating...";
 
       if (stopBtn) {
-        stopBtn.classList.remove('flex');
-        stopBtn.classList.add('hidden');
+        stopBtn.classList.remove('hidden');
+        stopBtn.classList.add('flex');
       }
 
       statusBox.classList.remove('hidden');
-      statusMessage.textContent = "Prompting Groq AI to coin untaken names...";
+      statusMessage.textContent = "Finding untaken names...";
       replenishBox.classList.add('hidden');
 
       let batchAdded = 0;
@@ -988,9 +979,8 @@
           if (state.isAborted) break;
 
           replenishBox.classList.remove('hidden');
-          replenishText.textContent = `Verified ${batchAdded}/${MIN_REQUIRED_NAMES} names with zero registered domain extensions. Coining more...`;
-          replenishCount.textContent = `${batchAdded}/${MIN_REQUIRED_NAMES}`;
-          statusMessage.textContent = `Harvesting untaken candidates (batch ${round})...`;
+          replenishText.textContent = "Creating unique names & checking domain extensions...";
+          statusMessage.textContent = "Finding untaken names...";
 
           const excludeList = Array.from(state.evaluatedNames);
           const isInternalAppend = isAppend || (round > 1);
@@ -1079,9 +1069,6 @@
               renderCardIntoTurn(entry, resultsList);
               batchAdded++;
 
-              resultCountBadge.textContent = `${state.results.length} available`;
-              replenishCount.textContent = `${batchAdded}/${MIN_REQUIRED_NAMES}`;
-
               if (batchAdded >= MAX_TARGET_NAMES) break;
             }
           }
@@ -1131,7 +1118,7 @@
 
     function renderCardIntoTurn(item, containerEl) {
       const card = document.createElement('div');
-      card.className = "bg-white border border-ink-200 rounded-2xl p-6 sm:p-7 transition hover:border-teal-300 shadow-sm space-y-4";
+      card.className = "bg-white border border-ink-200 rounded-2xl p-5 sm:p-7 transition hover:border-teal-300 shadow-sm space-y-4";
 
       const domainSearchUrl = `https://www.namecheap.com/domains/registration/results/?domain=${encodeURIComponent(item.cleanName + '.com')}`;
       const googleSearchUrl = `https://www.google.com/search?q=allintitle:%22${encodeURIComponent(item.name)}%22`;
@@ -1140,7 +1127,8 @@
         .replace(/^(Concept:\s*|Description:\s*)/i, '');
 
       card.innerHTML = `
-        <div class="flex items-center justify-between gap-4 pb-1">
+        <!-- Name & Copy -->
+        <div class="flex items-center justify-between gap-4">
           <div class="flex items-center gap-2.5">
             <h4 class="text-2xl sm:text-3xl font-extrabold text-ink-950 tracking-tight">${item.name}</h4>
             <button 
@@ -1150,8 +1138,9 @@
               Copy
             </button>
           </div>
-
-          <div class="flex items-center gap-2 shrink-0">
+          
+          <!-- Desktop Action Buttons (Right aligned) -->
+          <div class="hidden sm:flex items-center gap-2 shrink-0">
             <a 
               href="${googleSearchUrl}" 
               target="_blank" 
@@ -1169,22 +1158,37 @@
           </div>
         </div>
 
+        <!-- Description -->
         <div class="w-full text-sm sm:text-base text-ink-700 leading-relaxed pt-1">
           ${cleanDesc}
         </div>
 
-        <div class="pt-4 border-t border-ink-100 flex items-center justify-between gap-2.5 text-xs sm:text-sm">
+        <!-- Phone Action Buttons (Below description, aligned right) -->
+        <div class="flex sm:hidden items-center justify-end gap-2 pt-1">
+          <a 
+            href="${googleSearchUrl}" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center text-xs font-semibold text-ink-800 hover:text-ink-950 bg-white hover:bg-ink-100 border border-ink-200 px-3 py-1.5 rounded-xl transition shadow-xs">
+            Google Check
+          </a>
+          <a 
+            href="${domainSearchUrl}" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center text-xs font-semibold text-white bg-teal-600 hover:bg-teal-700 px-3.5 py-1.5 rounded-xl transition shadow-xs">
+            Domain Check
+          </a>
+        </div>
+
+        <!-- Bottom Untaken Status Check -->
+        <div class="pt-4 border-t border-ink-100 flex items-center justify-start gap-2.5 text-xs sm:text-sm">
           <div class="flex items-center gap-2 text-teal-800 font-semibold">
             <svg class="w-4 h-4 text-teal-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
             </svg>
             <span>Untaken across all domain extensions</span>
           </div>
-          <button 
-            onclick="copyText('${item.name}: ${cleanDesc.replace(/'/g, "\\'")}', 'Pitch')"
-            class="text-xs text-ink-500 hover:text-teal-700 font-medium transition">
-            Copy Pitch for Client
-          </button>
         </div>
       `;
 
