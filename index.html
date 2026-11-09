@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FegoName — AI Brand & Product Naming for Freelancers</title>
+  <title>FegoName — Brand & Product Naming AI for Freelancers</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +29,7 @@
               600: '#475569',
               500: '#64748b',
               400: '#94a3b8',
+              300: '#cbd5e1',
               200: '#e2e8f0',
               100: '#f1f5f9',
               50: '#f8fafc'
@@ -189,7 +190,7 @@
   <!-- UPGRADE MODAL -->
   <div id="upgradeModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 modal-backdrop">
     <div
-      class="bg-white border border-ink-200/90 rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[92vh] flex flex-col overflow-hidden">
+      class="bg-white border border-ink-200/90 rounded-3xl max-w-xl w-full shadow-2xl relative max-h-[92vh] flex flex-col overflow-hidden">
       <div
         class="sticky top-0 z-20 bg-white px-6 sm:px-9 pt-6 sm:pt-8 pb-5 border-b border-ink-100/80 flex items-start justify-between">
         <div class="pr-6">
@@ -206,14 +207,32 @@
         </button>
       </div>
 
-      <div class="px-6 sm:px-9 py-6 overflow-y-auto space-y-7">
+      <div class="px-6 sm:px-9 py-6 overflow-y-auto space-y-6">
+        <!-- License Input Section -->
         <div class="space-y-3">
           <label for="licenseInput" class="block text-xs font-semibold uppercase tracking-wider text-ink-700">
             Already have a license code?
           </label>
-          <div class="flex gap-2.5">
-            <input type="text" id="licenseInput" placeholder="Paste your license key"
-              class="flex-grow bg-canvas border border-ink-200 rounded-xl px-4 py-3 text-sm text-ink-950 placeholder-ink-400 focus:outline-none focus:border-teal-600 focus:bg-white transition font-mono shadow-2xs">
+
+          <div class="flex gap-2.5 items-center">
+            <div class="relative flex-grow flex items-center">
+              <input type="password" id="licenseInput" placeholder="Paste your license key"
+                class="w-full bg-canvas border border-ink-200 rounded-xl pl-4 pr-11 py-3 text-sm text-ink-950 placeholder-ink-400 focus:outline-none focus:border-teal-600 focus:bg-white transition font-mono shadow-2xs">
+              <button type="button" id="toggleLicenseBtn" onclick="toggleLicenseVisibility()"
+                class="absolute right-3.5 p-1 text-ink-400 hover:text-ink-700 transition flex items-center justify-center"
+                title="Show/Hide License Key">
+                <svg id="eyeIconShow" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <svg id="eyeIconHide" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
+                </svg>
+              </button>
+            </div>
             <button type="button" id="activateLicenseBtn" onclick="verifyLicense()"
               class="px-5 py-3 rounded-xl bg-ink-950 hover:bg-black text-white text-sm font-semibold transition active:scale-95 shrink-0 border border-ink-800 shadow-xs">
               Activate
@@ -222,28 +241,64 @@
           <p id="licenseFeedback" class="text-xs mt-2 hidden"></p>
         </div>
 
+        <!-- Centered Divider -->
         <div class="relative flex items-center justify-center my-6">
           <div class="border-t border-ink-200/80 w-full"></div>
-          <span class="bg-white px-3 text-xs text-ink-400 font-medium uppercase tracking-wider">or</span>
+          <span class="absolute bg-white px-3 text-xs text-ink-400 font-semibold uppercase tracking-wider text-center">
+            Get License Code
+          </span>
         </div>
 
-        <div class="space-y-4">
-          <div class="text-xs font-semibold uppercase tracking-wider text-ink-700 text-left">
-            Get License Code
-          </div>
-
+        <!-- 2-Column Responsive Plans Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+          
+          <!-- 1-Month Plan Card -->
           <div
-            class="p-4 sm:p-5 rounded-2xl border border-ink-200 bg-white hover:border-ink-300 transition flex items-center justify-between gap-4 shadow-2xs">
-            <div>
-              <div class="text-base font-bold text-ink-950">Lifetime Deal</div>
-              <div class="text-xs sm:text-sm text-teal-800 font-semibold mt-0.5">Pay once · Unlimited access forever</div>
+            class="p-5 rounded-2xl border border-ink-200 bg-white hover:border-teal-300 transition flex flex-col justify-between text-center gap-4 shadow-2xs">
+            <div class="space-y-1">
+              <h4 class="text-base font-bold text-ink-950">1-Month Plan</h4>
+              <p class="text-xs text-ink-500 font-medium">Unlock 30 days full access</p>
+              
+              <div class="pt-3">
+                <div class="text-2xl font-extrabold text-ink-950 font-mono tracking-tight">$19</div>
+                <div class="text-[11px] text-ink-400 font-medium">one-time payment</div>
+              </div>
             </div>
-            <a href="https://fegopics.gumroad.com/l/iwcjmr" target="_blank" rel="noopener"
-              class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold transition active:scale-95 shrink-0 shadow-xs flex items-center gap-1.5">
+
+            <a href="https://fegoname.gumroad.com/l/lgqexs" target="_blank" rel="noopener"
+              class="w-full py-2.5 px-4 rounded-xl bg-ink-950 hover:bg-black text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5 border border-ink-800">
               <span>Get Code</span>
               <span>→</span>
             </a>
           </div>
+
+          <!-- Annual Plan Card -->
+          <div
+            class="p-5 rounded-2xl border-2 border-teal-600/90 bg-teal-50/30 hover:bg-teal-50/50 transition flex flex-col justify-between text-center gap-4 shadow-xs relative">
+            <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-teal-600 text-white font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-2xs">
+              Save 35%
+            </span>
+
+            <div class="space-y-1 pt-1">
+              <h4 class="text-base font-bold text-ink-950">Annual Plan</h4>
+              <p class="text-xs text-teal-800 font-medium">Unlock 365 days full access</p>
+              
+              <div class="pt-3">
+                <div class="flex items-center justify-center gap-2">
+                  <span class="text-2xl font-extrabold text-ink-300 line-through font-mono tracking-tight">$228</span>
+                  <span class="text-2xl font-extrabold text-teal-800 font-mono tracking-tight">$149</span>
+                </div>
+                <div class="text-[11px] text-teal-700 font-medium">that means $12.40 per month</div>
+              </div>
+            </div>
+
+            <a href="https://fegoname.gumroad.com/l/wrpust" target="_blank" rel="noopener"
+              class="w-full py-2.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5">
+              <span>Get Code</span>
+              <span>→</span>
+            </a>
+          </div>
+
         </div>
       </div>
     </div>
@@ -465,8 +520,7 @@
       }
     }
 
-   
-   function updateAllQuotaPills() {
+    function updateAllQuotaPills() {
       const isPro = localStorage.getItem(LS_PRO) === "true";
       const savedKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
       const pills = document.querySelectorAll('.freeTrialPill');
@@ -499,6 +553,7 @@
       openUpgradeBtn.classList.replace("hover:bg-black", "hover:bg-teal-800");
 
       updateAllQuotaPills();
+      syncLicenseInputUI();
     }
 
     async function applyFreeUI(liveRemaining = null) {
@@ -582,6 +637,10 @@
               localStorage.setItem(LS_PRO, "false");
               localStorage.setItem(LS_LICENSE_STATUS, "invalid");
               localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+              if (data.isExpired) {
+                upgradeModalSubtitle.textContent = data.message || "Your license code has expired. Please enter a renewed license code.";
+                openModal('upgradeModal');
+              }
             }
           } catch (e) {
             applyProUI();
@@ -607,9 +666,6 @@
       }
     }
 
-    /**
-     * Stop Generation for a Specific Turn Block
-     */
     window.stopTurnGeneration = function (turnId) {
       const state = turnBlocks.get(turnId);
       if (!state || !state.isProcessing) return;
@@ -628,9 +684,6 @@
       showToast("Generation stopped");
     };
 
-    /**
-     * Create and append a new search turn block to the feed
-     */
     function appendNewSearchTurn() {
       turnCounter++;
       const turnId = turnCounter;
@@ -652,7 +705,6 @@
       section.className = "turn-block space-y-6 pt-4";
 
       section.innerHTML = `
-        <!-- Turn Header / Mode Selector -->
         <div class="flex items-center justify-between border-b border-ink-200/80 pb-3">
           <div class="flex items-center gap-6">
             <button type="button" id="tabBrand-${turnId}" onclick="switchTurnMode(${turnId}, 'brand')"
@@ -666,7 +718,6 @@
           </div>
         </div>
 
-        <!-- Input Card -->
         <section class="bg-white border border-ink-200/90 rounded-2xl p-5 sm:p-7 shadow-sm transition hover:shadow-md">
           <div class="flex items-center justify-between pb-3.5 mb-4 border-b border-ink-100">
             <label id="inputLabel-${turnId}" for="descriptionInput-${turnId}"
@@ -691,7 +742,6 @@
               </div>
             </div>
 
-            <!-- Submit and Single Stop Button Bar -->
             <div class="flex items-center gap-2.5">
               <button type="submit" id="generateBtn-${turnId}"
                 class="flex-1 py-3.5 px-6 rounded-xl bg-ink-950 hover:bg-black text-white text-base font-semibold tracking-wide transition shadow-sm flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99] border border-ink-800">
@@ -717,7 +767,6 @@
           </div>
         </section>
 
-        <!-- Dedicated Results Section for This Block -->
         <section id="resultsSection-${turnId}" class="hidden mt-6 space-y-4">
           <div class="flex items-center justify-between pb-3 border-b border-ink-200">
             <h3 id="resultsHeader-${turnId}" class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-ink-900">
@@ -731,7 +780,6 @@
 
           <div id="resultsList-${turnId}" class="space-y-4"></div>
 
-          <!-- Replenishment Indicator Box -->
           <div id="replenishBox-${turnId}"
             class="hidden p-4 bg-teal-50/60 border border-dashed border-teal-300 rounded-2xl flex items-center justify-between text-xs sm:text-sm text-teal-900 shadow-xs">
             <div class="flex items-center gap-2.5">
@@ -745,7 +793,6 @@
             <span id="replenishCount-${turnId}" class="font-mono text-teal-700 text-sm font-bold">0/5</span>
           </div>
 
-          <!-- Local Load More Container -->
           <div id="loadMoreContainer-${turnId}" class="hidden pt-4 pb-2 border-t border-ink-200/80 text-center">
             <button type="button" onclick="handleTurnLoadMoreClick(${turnId})"
               class="inline-flex items-center justify-center gap-2 text-base font-bold text-teal-600 hover:text-teal-800 hover:underline transition py-2 px-4 rounded-xl">
@@ -838,9 +885,6 @@
       runTurnGeneration(turnId, true);
     };
 
-    /**
-     * Generation Engine for a Specific Turn Block
-     */
     async function runTurnGeneration(turnId, isAppend = false) {
       const state = turnBlocks.get(turnId);
       if (!state || state.isProcessing) return;
@@ -862,7 +906,6 @@
       const savedLicense = localStorage.getItem(LS_LICENSE) || "";
       const licenseStatus = localStorage.getItem(LS_LICENSE_STATUS);
 
-      // PRO CHECK: Pro users MUST provide their own Groq API key (never uses server key)
       if (isPro) {
         if (!userKey || !userKey.startsWith("gsk_")) {
           showToast("Pro mode requires your free Groq API key.");
@@ -871,7 +914,6 @@
           return;
         }
       } else {
-        // Free user quota check
         const lockedUntil = parseInt(localStorage.getItem(LS_LIMIT_LOCKED) || "0", 10);
         if (!userKey && Date.now() < lockedUntil) {
           upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro or add your Groq key.`;
@@ -917,10 +959,9 @@
       btnIcon.textContent = "·";
       btnText.textContent = isAppend ? "Finding more..." : "Generating...";
 
-      // Reveal Stop Button right next to CTA button
       if (stopBtn) {
-        stopBtn.classList.remove('hidden');
-        stopBtn.classList.add('flex');
+        stopBtn.classList.remove('flex');
+        stopBtn.classList.add('hidden');
       }
 
       statusBox.classList.remove('hidden');
@@ -962,15 +1003,24 @@
               idea: description,
               excludeList: excludeList,
               isAppend: isInternalAppend,
-              isReplenish: round > 1, // Only round 1 consumes IP quota
+              isReplenish: round > 1,
               count: 20
             })
           });
 
           if (state.isAborted) break;
 
-          // Rate limit reached for free IP
           if (res.status === 403) {
+            const errData = await res.json().catch(() => ({}));
+            if (errData.isExpired) {
+              localStorage.setItem(LS_PRO, "false");
+              localStorage.setItem(LS_LICENSE_STATUS, "invalid");
+              applyFreeUI();
+              upgradeModalSubtitle.textContent = errData.message || "Your license code has expired. Please enter a renewed license code.";
+              openModal('upgradeModal');
+              throw new Error(errData.message || "Your license has expired.");
+            }
+
             const lockExpiry = Date.now() + (24 * 60 * 60 * 1000);
             localStorage.setItem(LS_LIMIT_LOCKED, lockExpiry.toString());
             syncBackendQuota(0);
@@ -982,9 +1032,8 @@
           if (!res.ok) {
             const errData = await res.json().catch(() => ({}));
             const errMsg = errData.error || errData.message || `Server error ${res.status}`;
-
-            // Check if key is expired, invalid, or unauthorized
             const lowerErr = errMsg.toLowerCase();
+
             if (res.status === 401 || lowerErr.includes("api key") || lowerErr.includes("groq") || lowerErr.includes("unauthorized") || lowerErr.includes("invalid_api_key")) {
               localStorage.removeItem(LS_PACKED_KEY);
               if (groqKeyInput) groqKeyInput.value = "";
@@ -1048,7 +1097,6 @@
           totalFoundBadge.textContent = `${state.results.length} untaken names verified`;
           loadMoreContainer.classList.remove('hidden');
 
-          // Append next search turn if this block just completed its first generation
           if (!state.hasGeneratedOnce) {
             state.hasGeneratedOnce = true;
             appendNewSearchTurn();
@@ -1058,9 +1106,7 @@
         syncBackendQuota();
 
       } catch (err) {
-        if (err.name === 'AbortError' || state.isAborted) {
-          // Handled gracefully as manual stop
-        } else {
+        if (err.name !== 'AbortError' && !state.isAborted) {
           console.error(err);
           showToast(err.message || "Failed to generate names");
         }
@@ -1069,7 +1115,6 @@
         btnIcon.textContent = "→";
         btnText.textContent = state.hasGeneratedOnce ? "Update Names" : "Suggest Unique Names";
 
-        // Hide Stop Button
         if (stopBtn) {
           stopBtn.classList.remove('flex');
           stopBtn.classList.add('hidden');
@@ -1146,9 +1191,39 @@
       containerEl.appendChild(card);
     }
 
-    /**
-     * Manual License Verification
-     */
+    window.toggleLicenseVisibility = function () {
+      const input = document.getElementById('licenseInput');
+      const eyeShow = document.getElementById('eyeIconShow');
+      const eyeHide = document.getElementById('eyeIconHide');
+      if (!input) return;
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (eyeShow) eyeShow.classList.add('hidden');
+        if (eyeHide) eyeHide.classList.remove('hidden');
+      } else {
+        input.type = 'password';
+        if (eyeShow) eyeShow.classList.remove('hidden');
+        if (eyeHide) eyeHide.classList.add('hidden');
+      }
+    };
+
+    function syncLicenseInputUI() {
+      const savedLicense = localStorage.getItem(LS_LICENSE) || "";
+      const isPro = localStorage.getItem(LS_PRO) === "true";
+      const licenseInput = document.getElementById('licenseInput');
+      const licenseFeedback = document.getElementById('licenseFeedback');
+      
+      if (licenseInput && savedLicense) {
+        licenseInput.value = savedLicense;
+      }
+      if (licenseFeedback && isPro && savedLicense) {
+        licenseFeedback.className = "text-xs mt-2 text-teal-700 font-semibold";
+        licenseFeedback.textContent = "License active and verified.";
+        licenseFeedback.classList.remove('hidden');
+      }
+    }
+
     window.verifyLicense = async function () {
       const key = licenseInput.value.trim();
       if (!key) return;
@@ -1179,12 +1254,11 @@
           localStorage.removeItem(LS_LIMIT_LOCKED);
 
           licenseFeedback.className = "text-xs mt-2 text-teal-700 font-semibold";
-          licenseFeedback.textContent = "License activated successfully! Pro is active.";
+          licenseFeedback.textContent = `License activated successfully! (${data.plan || 'Pro'} active)`;
 
           applyProUI();
           setTimeout(() => {
             closeModal('upgradeModal');
-            // If Groq key not set yet, immediately prompt them to add their free Groq key
             const savedKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
             if (!savedKey || !savedKey.startsWith("gsk_")) {
               settingsModalSubtitle.textContent = "Pro unlocked! Now paste your free Groq API key to start naming.";
@@ -1285,12 +1359,13 @@
 
     function init() {
       syncBackendQuota();
+      syncLicenseInputUI();
 
-      // Mount the initial search block
       appendNewSearchTurn();
 
       openUpgradeBtn.addEventListener('click', () => {
         upgradeModalSubtitle.textContent = "Full unlimited access for freelancers providing naming services to clients.";
+        syncLicenseInputUI();
         openModal('upgradeModal');
       });
 
