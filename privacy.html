@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — FegoName</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            canvas: '#fbfbfb',
+            ink: {
+              950: '#09090b',
+              900: '#0f172a',
+              800: '#1e293b',
+              700: '#334155',
+              600: '#475569',
+              500: '#64748b',
+              400: '#94a3b8',
+              300: '#cbd5e1',
+              200: '#e2e8f0',
+              100: '#f1f5f9',
+              50: '#f8fafc'
+            },
+            teal: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #fbfbfb;
+      color: #09090b;
+    }
+
+    ::selection {
+      background-color: #ccfbf1;
+      color: #115e59;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen font-sans antialiased flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="border-b border-ink-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      <a href="index.html" class="flex items-center hover:opacity-85 transition" title="FegoName">
+        <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=120"
+          alt="FegoName Logo" onerror="this.onerror=null; this.src='https://placehold.co/96x96/09090b/2dd4bf?text=FN';"
+          class="w-8 h-8 rounded-xl object-cover shadow-xs border border-ink-800" />
+      </a>
+
+      <nav class="flex items-center gap-3 sm:gap-6">
+        <a href="index.html" class="text-xs sm:text-sm font-semibold text-ink-600 hover:text-ink-950 transition">
+          Home
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="max-w-3xl mx-auto px-0 sm:px-6 py-6 sm:py-16 flex-grow w-full">
+
+    <!-- Document Header -->
+    <div class="mb-6 sm:mb-12 border-b border-ink-200/80 pb-6 sm:pb-8 px-4 sm:px-0">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs font-semibold uppercase tracking-wider mb-3">
+        Data & Transparency
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink-950">
+        Privacy Policy
+      </h1>
+      <p class="text-sm text-ink-500 font-mono mt-2">
+        Last updated: November 2026
+      </p>
+    </div>
+
+    <!-- Content Card -->
+    <div class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-7 sm:space-y-8 text-[15px] sm:text-base leading-relaxed text-ink-700">
+
+      <!-- Section 1 -->
+      <section class="space-y-2.5">
+        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-sm">01.</span> Our Privacy-First Commitment
+        </h2>
+        <p class="text-ink-800 leading-relaxed">
+          At FegoName, your confidential client concepts, business briefs, and sensitive API credentials are treated with extreme care. We operate on a zero-tracking, privacy-first architecture designed to store only the bare technical minimum required to enforce fair rate limits and verify paid licenses.
+        </p>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="space-y-2.5">
+        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-sm">02.</span> Local Storage of Groq API Keys (BYOK)
+        </h2>
+        <div class="p-4 rounded-xl sm:rounded-2xl bg-teal-50/60 border border-teal-200/80 text-teal-950 space-y-2">
+          <p class="font-bold text-xs uppercase tracking-wider text-teal-900 font-mono">
+            Zero Server Database Storage
+          </p>
+          <p class="text-[13.5px] sm:text-sm leading-relaxed text-teal-950">
+            When you enter your personal Groq API key (<code class="font-mono text-xs bg-white/80 px-1 py-0.5 rounded border border-teal-300">gsk_...</code>), it is encoded and saved strictly in your local web browser's storage (<code class="font-mono text-xs">localStorage</code>). It is never written to a permanent backend database, logged to persistent disks, or shared with advertisers.
+          </p>
+        </div>
+        <p class="text-ink-800 leading-relaxed">
+          During active search sessions, your key is transmitted via an encrypted HTTPS header (<code class="font-mono text-xs text-teal-800 bg-teal-50 px-1.5 py-0.5 rounded font-semibold">x-groq-key</code>) directly to our stateless Cloudflare Worker, which instantly proxies the prompt directly to Groq's high-speed inference engine.
+        </p>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="space-y-2.5">
+        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-sm">03.</span> Business Briefs & Prompt Processing
+        </h2>
+        <p class="text-ink-800 leading-relaxed">
+          The business briefs, product concepts, and exclude lists submitted via FegoName are processed ephemerally in RAM memory at Cloudflare edge data centers.
+        </p>
+        <ul class="list-disc pl-5 space-y-2.5 text-ink-800 marker:text-teal-600">
+          <li>We do not build commercial training profiles or retain your raw ideas for model retraining.</li>
+          <li>Prompt contents are sent to the AI inference provider solely to generate the batch of candidate names requested.</li>
+          <li>Once candidate names are verified and returned to your browser screen, the memory buffer in the Worker is dismissed.</li>
+        </ul>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="space-y-2.5">
+        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-sm">04.</span> IP Quota Tracking via Cloudflare KV
+        </h2>
+        <p class="text-ink-800 leading-relaxed">
+          For evaluation users who do not provide a personal Groq key or active Gumroad license, our backend records the incoming connecting IP address (<code class="font-mono text-xs text-ink-900 bg-ink-100 px-1.5 py-0.5 rounded">cf-connecting-ip</code>) in Cloudflare KV strictly to enforce the free trial allowance (3 lifetime searches).
+        </p>
+        <p class="text-ink-800 leading-relaxed">
+          These counters are set with an automated expiration TTL (time-to-live) of 30 days and are never cross-referenced with your personal identity, browsing history, or external identity databases.
+        </p>
+      </section>
+
+      <!-- Section 5 -->
+      <section class="space-y-2.5">
+        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-sm">05.</span> License Verification via Gumroad
+        </h2>
+        <p class="text-ink-800 leading-relaxed">
+          When you activate or renew a Lifetime Deal or annual license, your license key is forwarded through our Cloudflare Worker to Gumroad's secure licensing API (<code class="font-mono text-xs">api.gumroad.com/v2/licenses/verify</code>) to confirm payment status, chargebacks, or refunds. FegoName does not collect or process credit card numbers or banking data; all payment billing occurs directly on Gumroad's PCI-compliant infrastructure.
+        </p>
+      </section>
+
+      <!-- Section 6 -->
+      <section class="space-y-2.5">
+        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-sm">06.</span> Third-Party Service Providers
+        </h2>
+        <p class="text-ink-800 leading-relaxed">
+          Our service leverages reputable infrastructure partners for edge delivery and DNS verification:
+        </p>
+        <ul class="list-disc pl-5 space-y-2 text-ink-800 marker:text-teal-600">
+          <li><strong class="text-ink-950">Cloudflare:</strong> Edge compute (Workers), KV storage, and DNS-over-HTTPS queries to determine live domain name availability.</li>
+          <li><strong class="text-ink-950">Groq:</strong> LPUs and model inference executing the naming logic.</li>
+          <li><strong class="text-ink-950">Gumroad:</strong> Digital merchant of record for license purchases and verification.</li>
+        </ul>
+      </section>
+
+      <!-- Section 7 -->
+      <section class="space-y-2.5">
+        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-sm">07.</span> Your Privacy Rights & Deletion
+        </h2>
+        <p class="text-ink-800 leading-relaxed">
+          Because your Groq API key and license activation status reside in your device's browser, you can permanently erase them at any time simply by clicking "Remove Key" in the settings modal or by clearing your browser cache and site storage.
+        </p>
+        <p class="text-ink-800 leading-relaxed">
+          If you have questions regarding your data or privacy practices, please contact us through our <a href="contact.html" class="text-teal-600 hover:text-teal-800 font-semibold underline underline-offset-2">Contact Page</a>.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-ink-200 bg-white py-6 mt-12 sm:mt-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-500">
+      <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
+        <a href="terms.html" class="hover:text-ink-900 transition">Terms</a>
+        <a href="privacy.html" class="text-teal-700 font-semibold transition">Privacy</a>
+        <a href="cookies.html" class="hover:text-ink-900 transition">Cookies</a>
+        <a href="contact.html" class="hover:text-ink-900 transition">Contact</a>
+        <a href="lifetime-deal.html" class="text-teal-600 font-bold hover:text-teal-700 transition">Lifetime Deal</a>
+      </div>
+      <span>FegoName © 2026. All rights reserved.</span>
+    </div>
+  </footer>
+
+</body>
+
+</html>

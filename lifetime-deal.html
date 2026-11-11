@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redeem Lifetime Deal — FegoName</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            canvas: '#fbfbfb',
+            ink: {
+              950: '#09090b',
+              900: '#0f172a',
+              800: '#1e293b',
+              700: '#334155',
+              600: '#475569',
+              500: '#64748b',
+              400: '#94a3b8',
+              300: '#cbd5e1',
+              200: '#e2e8f0',
+              100: '#f1f5f9',
+              50: '#f8fafc'
+            },
+            teal: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #fbfbfb;
+      color: #09090b;
+    }
+
+    ::selection {
+      background-color: #ccfbf1;
+      color: #115e59;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen font-sans antialiased flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="border-b border-ink-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      <a href="index.html" class="flex items-center hover:opacity-85 transition" title="FegoName">
+        <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=120"
+          alt="FegoName Logo" onerror="this.onerror=null; this.src='https://placehold.co/96x96/09090b/2dd4bf?text=FN';"
+          class="w-8 h-8 rounded-xl object-cover shadow-xs border border-ink-800" />
+      </a>
+
+      <nav class="flex items-center gap-3 sm:gap-6">
+        <a href="index.html" class="text-sm font-semibold text-ink-600 hover:text-ink-950 transition">
+          Home &rarr;
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center px-4 py-8 sm:py-16">
+    <div class="w-full max-w-lg space-y-6">
+
+      <!-- Main White Card -->
+      <div class="bg-white border border-ink-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-7">
+
+        <!-- Badge Lockup -->
+        <div class="text-center space-y-2.5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs font-semibold uppercase tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+            <span>Lifetime Deal Access</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-ink-950 tracking-tight">
+            Redeem Your Lifetime Access
+          </h1>
+          <p class="text-sm sm:text-base text-ink-600 leading-relaxed max-w-sm mx-auto">
+            Enter your AppSumo or promotional redemption code below to permanently unlock FegoName Pro.
+          </p>
+        </div>
+
+        <!-- Redemption Form -->
+        <form id="redeemForm" class="space-y-4">
+          <div>
+            <label for="redeemCode" class="block text-xs font-bold font-mono uppercase tracking-wider text-ink-700 mb-1.5">
+              Redemption Code
+            </label>
+            <input
+              type="text"
+              id="redeemCode"
+              placeholder="e.g. FEGO-XXXX-XXXX"
+              required
+              autocomplete="off"
+              spellcheck="false"
+              class="w-full px-4 py-3.5 rounded-xl border border-ink-300 font-mono font-semibold text-center text-base sm:text-lg text-ink-950 bg-ink-50/50 placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition"
+            />
+          </div>
+
+          <button
+            type="submit"
+            id="redeemBtn"
+            class="w-full py-3.5 px-6 rounded-xl bg-ink-950 hover:bg-black text-white font-semibold text-sm sm:text-base transition shadow-xs flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed border border-ink-800"
+          >
+            <svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span id="redeemBtnText">Activate Lifetime Access</span>
+          </button>
+        </form>
+
+        <!-- Feedback / Result Box -->
+        <div id="statusBox" class="hidden rounded-2xl p-4 sm:p-5 text-sm sm:text-base leading-relaxed transition-all"></div>
+
+        <!-- 3-Step Guide -->
+        <div class="pt-6 border-t border-ink-100 text-left space-y-4">
+          <h3 class="text-xs sm:text-sm font-bold font-mono uppercase tracking-wider text-ink-900">
+            How Activation Works
+          </h3>
+          <ol class="space-y-3.5 text-sm sm:text-base text-ink-700 list-decimal pl-5 leading-relaxed">
+            <li>Paste the redemption code received from your purchase.</li>
+            <li>Click <strong class="text-ink-950 font-bold">Activate Lifetime Access</strong>.</li>
+            <li>You're all set—start generating untaken brand and product names!</li>
+          </ol>
+        </div>
+
+      </div>
+
+      <!-- Distinct Note Outside Below The Box -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-teal-50/90 border border-teal-200 text-sm sm:text-base text-teal-950 leading-relaxed flex items-start gap-3 shadow-2xs">
+        <svg class="w-5 h-5 text-teal-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <p>
+          <strong class="text-teal-900 font-bold">Lost access after clearing history or switching devices?</strong> Simply return to this page and enter your redemption code again to restore your Lifetime Access anytime.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast"
+    class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-200 bg-ink-950 text-white px-4 py-2.5 rounded-xl shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2 border border-ink-800">
+    <span class="w-2 h-2 rounded-full bg-teal-400"></span>
+    <span id="toastMessage">Copied to clipboard</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-ink-200 bg-white py-6">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-ink-500">
+      <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
+        <a href="terms.html" class="hover:text-ink-900 transition">Terms</a>
+        <a href="privacy.html" class="hover:text-ink-900 transition">Privacy</a>
+        <a href="cookies.html" class="hover:text-ink-900 transition">Cookies</a>
+        <a href="contact.html" class="hover:text-ink-900 transition">Contact</a>
+        <a href="lifetime-deal.html" class="text-teal-700 font-semibold transition">Lifetime Deal</a>
+      </div>
+      <span>FegoName © 2026. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Live Cloudflare Worker URL (matched from index.html)
+    const BACKEND_URL = "https://fegoname-api.fegoname-ai.workers.dev";
+
+    function getRedeemUrl() {
+      const isLocal = window.location.protocol === 'file:' || 
+                      window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1';
+      return isLocal ? `${BACKEND_URL}/api/redeem-code` : '/api/redeem-code';
+    }
+
+    const redeemForm = document.getElementById('redeemForm');
+    const redeemInput = document.getElementById('redeemCode');
+    const redeemBtn = document.getElementById('redeemBtn');
+    const redeemBtnText = document.getElementById('redeemBtnText');
+    const statusBox = document.getElementById('statusBox');
+
+    redeemForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = redeemInput.value.trim().toUpperCase();
+      if (!code) return;
+
+      statusBox.classList.add('hidden');
+      statusBox.innerHTML = '';
+      redeemBtn.disabled = true;
+      redeemBtnText.textContent = 'Verifying Code...';
+
+      try {
+        const response = await fetch(getRedeemUrl(), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (response.ok && data.success) {
+          const finalLicenseKey = data.license_key || code;
+          localStorage.setItem('fegoname_license_key', finalLicenseKey);
+          localStorage.setItem('fegoname_license_type', 'lifetimedeal');
+          localStorage.setItem('fegoname_pro_active', 'true');
+          localStorage.setItem('fegoname_license_status', 'active');
+          localStorage.setItem('fegoname_license_timestamp', Date.now().toString());
+          localStorage.removeItem('fegoname_limit_locked_until');
+
+          statusBox.className = 'rounded-2xl p-5 bg-teal-50 border border-teal-200 text-teal-950 space-y-3';
+          statusBox.innerHTML = `
+            <div class="flex items-center gap-2 text-teal-800 font-bold">
+              <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span class="text-sm sm:text-base">Lifetime Access Activated!</span>
+            </div>
+            <p class="text-xs sm:text-sm text-teal-900 leading-relaxed">
+              Your device is now permanently registered for FegoName Pro. Here is your active license key for your records:
+            </p>
+            <div class="flex items-center gap-2">
+              <div class="flex-grow px-3 py-2 bg-white rounded-xl border border-teal-200 font-mono text-xs sm:text-sm font-bold text-ink-950 truncate select-all">
+                ${finalLicenseKey}
+              </div>
+              <button type="button" onclick="copyKey('${finalLicenseKey}')" class="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold transition">
+                Copy
+              </button>
+            </div>
+            <div class="pt-2">
+              <a href="index.html" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-ink-950 hover:bg-black text-white font-semibold text-sm transition shadow-xs">
+                <span>Launch FegoName App &rarr;</span>
+              </a>
+            </div>
+          `;
+          statusBox.classList.remove('hidden');
+          redeemForm.classList.add('hidden');
+
+        } else {
+          statusBox.className = 'rounded-2xl p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs sm:text-sm flex items-start gap-2.5';
+          statusBox.innerHTML = `
+            <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+              <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line>
+            </svg>
+            <span>${data.error || 'Invalid or unlisted redemption code. Please check your purchase receipt.'}</span>
+          `;
+          statusBox.classList.remove('hidden');
+        }
+
+      } catch (err) {
+        statusBox.className = 'rounded-2xl p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs sm:text-sm flex items-start gap-2.5';
+        statusBox.innerHTML = `
+          <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+            <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line>
+          </svg>
+          <span>Unable to reach verification server. Please verify your connection and try again.</span>
+        `;
+        statusBox.classList.remove('hidden');
+      } finally {
+        redeemBtn.disabled = false;
+        redeemBtnText.textContent = 'Activate Lifetime Access';
+      }
+    });
+
+    function copyKey(key) {
+      const el = document.createElement('textarea');
+      el.value = key;
+      document.body.appendChild(el);
+      el.select();
+      try {
+        document.execCommand('copy');
+        showToast('License key copied');
+      } catch (err) {
+        showToast('Failed to copy');
+      }
+      document.body.removeChild(el);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toastMessage.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2200);
+    }
+  </script>
+
+</body>
+
+</html>

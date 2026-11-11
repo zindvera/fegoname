@@ -417,9 +417,10 @@
     // Local Storage Keys
     const LS_PRO = "fegoname_pro_active";
     const LS_LICENSE = "fegoname_license_key";
-    const LS_LICENSE_STATUS = "fegoname_license_status";       // "active" | "invalid"
+    const LS_LICENSE_TYPE = "fegoname_license_type";       // "gumroad" | "lifetimedeal"
+    const LS_LICENSE_STATUS = "fegoname_license_status";     // "active" | "invalid"
     const LS_LICENSE_TIMESTAMP = "fegoname_license_timestamp"; // epoch ms
-    const LS_LIMIT_LOCKED = "fegoname_limit_locked_until";      // epoch ms (24h lock for 0 free quota)
+    const LS_LIMIT_LOCKED = "fegoname_limit_locked_until";    // epoch ms (24h lock for 0 free quota)
     const LS_PACKED_KEY = "fegoname_encoded_groq";
 
     let activeModalId = null;
@@ -584,6 +585,7 @@
 
     async function syncBackendQuota(liveRemaining = null) {
       const savedLicense = localStorage.getItem(LS_LICENSE);
+      const savedType = localStorage.getItem(LS_LICENSE_TYPE);
       const licenseStatus = localStorage.getItem(LS_LICENSE_STATUS);
       const licenseTime = parseInt(localStorage.getItem(LS_LICENSE_TIMESTAMP) || "0", 10);
       const now = Date.now();
@@ -602,15 +604,24 @@
         }
         if (licenseStatus === "active" && (now - licenseTime >= ONE_DAY_MS)) {
           try {
+            const cleanKeyUpper = savedLicense.trim().toUpperCase();
+            const inferredType = savedType || (cleanKeyUpper.startsWith("FEGO-") || cleanKeyUpper.startsWith("SCROLL-") ? "lifetimedeal" : "gumroad");
+
             const res = await fetch(`${BACKEND_URL}/api/verify-license`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ license_key: savedLicense })
+              body: JSON.stringify({ 
+                license_key: savedLicense,
+                license_type: inferredType
+              })
             });
             const data = await res.json().catch(() => ({}));
             if (res.ok && data.success) {
               localStorage.setItem(LS_LICENSE_STATUS, "active");
               localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+              if (data.license_type) {
+                localStorage.setItem(LS_LICENSE_TYPE, data.license_type);
+              }
               applyProUI();
               return;
             } else {
@@ -1216,29 +1227,38 @@
       btn.disabled = true;
       btn.textContent = "...";
       licenseFeedback.className = "text-xs mt-2 text-ink-500";
-      licenseFeedback.textContent = "Verifying license with Gumroad...";
+      licenseFeedback.textContent = "Verifying license...";
       licenseFeedback.classList.remove('hidden');
 
       const now = Date.now();
+
+      // Determine initial license type (KV code vs Gumroad)
+      const cleanKeyUpper = key.toUpperCase();
+      const initialType = (cleanKeyUpper.startsWith("FEGO-") || cleanKeyUpper.startsWith("SCROLL-")) ? "lifetimedeal" : "gumroad";
 
       try {
         const res = await fetch(`${BACKEND_URL}/api/verify-license`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ license_key: key })
+          body: JSON.stringify({ 
+            license_key: key,
+            license_type: initialType
+          })
         });
 
         const data = await res.json().catch(() => ({}));
 
         if (res.ok && data.success) {
+          const activeType = data.license_type || initialType;
           localStorage.setItem(LS_PRO, "true");
           localStorage.setItem(LS_LICENSE, key);
+          localStorage.setItem(LS_LICENSE_TYPE, activeType);
           localStorage.setItem(LS_LICENSE_STATUS, "active");
           localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
           localStorage.removeItem(LS_LIMIT_LOCKED);
 
           licenseFeedback.className = "text-xs mt-2 text-teal-700 font-semibold";
-          licenseFeedback.textContent = `License activated successfully! (${data.plan || 'Pro'} active)`;
+          licenseFeedback.textContent = `License activated successfully! (${data.plan || activeType} active)`;
 
           applyProUI();
           setTimeout(() => {
