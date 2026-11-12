@@ -734,7 +734,7 @@
           <form id="namingForm-${turnId}" onsubmit="handleTurnSubmit(event, ${turnId})" class="space-y-4">
             <div>
               <textarea id="descriptionInput-${turnId}" rows="3" required
-                placeholder="e.g. A boutique cold-brew coffee brand for remote software engineers who need calm, sustained morning focus without jitters."
+                placeholder="e.g. A software studio focused on building lightweight SaaS tools for small business clients."
                 class="w-full bg-canvas border border-ink-200 rounded-xl p-3.5 sm:p-4 text-base text-ink-950 placeholder-ink-400 focus:outline-none focus:border-teal-600 focus:ring-1 focus:ring-teal-600 focus:bg-white transition resize-none leading-relaxed"></textarea>
 
               <div class="mt-2.5 flex items-center justify-between text-xs">
@@ -830,13 +830,13 @@
         tabBrand.className = activeClass;
         tabProduct.className = inactiveClass;
         inputLabel.textContent = "Describe what the business does";
-        textarea.placeholder = "e.g. A boutique cold-brew coffee brand for remote software engineers who need calm, sustained morning focus without jitters.";
+        textarea.placeholder = "e.g. A software studio focused on building lightweight SaaS tools for small business clients.";
         if (resultsHeader) resultsHeader.textContent = "Available Brand Names";
       } else {
         tabProduct.className = activeClass;
         tabBrand.className = inactiveClass;
         inputLabel.textContent = "Describe what the product does";
-        textarea.placeholder = "e.g. A lightweight Figma plugin that exports vector assets directly into clean, copy-paste Tailwind React components.";
+        textarea.placeholder = "e.g. An all-in-one SaaS platform for business owners to track daily revenue, investments, and operating expenses.";
         if (resultsHeader) resultsHeader.textContent = "Available Product Names";
       }
     };
@@ -848,9 +848,9 @@
       const wordCountLabel = document.getElementById(`wordCountLabel-${turnId}`);
 
       if (state.mode === 'brand') {
-        textarea.value = "A boutique cold-brew coffee brand for remote software engineers who need calm, sustained morning focus without jitters.";
+        textarea.value = "A software studio focused on building lightweight SaaS tools for small business clients.";
       } else {
-        textarea.value = "A lightweight Figma plugin that exports vector assets directly into clean, copy-paste Tailwind React components.";
+        textarea.value = "An all-in-one SaaS platform for business owners to track daily revenue, investments, and operating expenses.";
       }
       updateWordCountDisplay(textarea, wordCountLabel);
     };
