@@ -78,14 +78,15 @@
   <!-- Header -->
   <header class="border-b border-ink-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      
       <a href="index.html" class="flex items-center hover:opacity-85 transition" title="FegoName">
-        <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=120"
-          alt="FegoName Logo" onerror="this.onerror=null; this.src='https://placehold.co/96x96/09090b/2dd4bf?text=FN';"
-          class="w-8 h-8 rounded-xl object-cover shadow-xs border border-ink-800" />
+        <img src="media/logo/fegoname.png"
+          alt="FegoName Logo"
+          class="h-8" />
       </a>
 
       <nav class="flex items-center gap-3 sm:gap-6">
-        <a href="index.html" class="text-xs sm:text-sm font-semibold text-ink-600 hover:text-ink-950 transition">
+        <a href="index.html" class="text-sm sm:text-base font-semibold text-ink-600 hover:text-ink-950 transition">
           Home
         </a>
       </nav>
@@ -97,24 +98,24 @@
 
     <!-- Document Header -->
     <div class="mb-6 sm:mb-12 border-b border-ink-200/80 pb-6 sm:pb-8 px-4 sm:px-0">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs font-semibold uppercase tracking-wider mb-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
         Legal Agreement
       </div>
-      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink-950">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-ink-950">
         Terms of Service
       </h1>
-      <p class="text-sm text-ink-500 font-mono mt-2">
+      <p class="text-sm sm:text-base text-ink-500 font-mono mt-2.5">
         Last updated: November 2026
       </p>
     </div>
 
     <!-- Content Card -->
-    <div class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-7 sm:space-y-8 text-[15px] sm:text-base leading-relaxed text-ink-700">
+    <div class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-8 sm:space-y-9 text-base sm:text-[17px] md:text-base leading-relaxed text-ink-700">
 
       <!-- Section 1 -->
-      <section class="space-y-2.5">
-        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-sm">01.</span> Acceptance of Terms
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-base sm:text-lg">01.</span> Acceptance of Terms
         </h2>
         <p class="text-ink-800 leading-relaxed">
           By accessing or utilizing FegoName (accessible via this application and related Cloudflare Worker API endpoints), you agree to be bound by these Terms of Service. If you do not accept these terms in full, you must not access or use the platform.
@@ -122,14 +123,14 @@
       </section>
 
       <!-- Section 2 -->
-      <section class="space-y-2.5">
-        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-sm">02.</span> Service Architecture & Usage Quotas
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-base sm:text-lg">02.</span> Service Architecture & Usage Quotas
         </h2>
         <p class="text-ink-800 leading-relaxed">
           FegoName offers an AI-powered name generation and DNS availability verification service primarily aimed at freelancers, agencies, and brand strategists.
         </p>
-        <ul class="list-disc pl-5 space-y-2.5 text-ink-800 marker:text-teal-600">
+        <ul class="list-disc pl-5 space-y-3 text-ink-800 marker:text-teal-600">
           <li>
             <strong class="text-ink-950">Free Tier Usage:</strong> Free evaluation usage is restricted by client IP address up to a preset limit tracked via Cloudflare KV. Bypassing, spoofing headers, or automating requests to circumvent quota enforcement is prohibited.
           </li>
@@ -137,15 +138,15 @@
             <strong class="text-ink-950">Pro & Lifetime Access:</strong> Paid license access requires a valid license key verified through Gumroad. Access is non-transferable unless expressly agreed in writing.
           </li>
           <li>
-            <strong class="text-ink-950">Bring Your Own Key (BYOK):</strong> Pro accounts operate on a Bring-Your-Own-Key model for high-frequency generations using personal Groq API keys (<code class="font-mono text-xs text-teal-800 bg-teal-50 px-1.5 py-0.5 rounded font-bold">gsk_...</code>). You are solely responsible for compliance with Groq terms and API costs associated with your private key.
+            <strong class="text-ink-950">Bring Your Own Key (BYOK):</strong> Pro accounts operate on a Bring-Your-Own-Key model for high-frequency generations using personal Groq API keys (<code class="font-mono text-sm text-teal-800 bg-teal-50 px-1.5 py-0.5 rounded font-bold">gsk_...</code>). You are solely responsible for compliance with Groq terms and API costs associated with your private key.
           </li>
         </ul>
       </section>
 
       <!-- Section 3 -->
-      <section class="space-y-2.5">
-        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-sm">03.</span> Intellectual Property & Generated Output
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-base sm:text-lg">03.</span> Intellectual Property & Generated Output
         </h2>
         <p class="text-ink-800 leading-relaxed">
           <strong class="text-ink-950">Your Ownership:</strong> You retain complete, unencumbered commercial ownership of all brand names, product titles, and creative meanings generated for your projects or client deliverables. FegoName claims no royalty, equity, or licensing rights in any candidate name selected by you.
@@ -156,15 +157,15 @@
       </section>
 
       <!-- Section 4 -->
-      <section class="space-y-2.5">
-        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-sm">04.</span> Domain Verification & Trademark Disclaimer
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-base sm:text-lg">04.</span> Domain Verification & Trademark Disclaimer
         </h2>
-        <div class="p-4 rounded-xl sm:rounded-2xl bg-teal-50/60 border border-teal-200/80 text-teal-950 space-y-2">
-          <p class="font-bold text-xs uppercase tracking-wider text-teal-900 font-mono">
+        <div class="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-teal-50/60 border border-teal-200/80 text-teal-950 space-y-2">
+          <p class="font-bold text-xs sm:text-sm uppercase tracking-wider text-teal-900 font-mono">
             Important Legal Notice
           </p>
-          <p class="text-[13.5px] sm:text-sm leading-relaxed text-teal-950">
+          <p class="text-[15px] sm:text-base leading-relaxed text-teal-950">
             FegoName provides automated DNS record queries over Cloudflare DNS-over-HTTPS (DoH) across selected common top-level domain extensions (.com, .net, .org, .io, .co, .ai, etc.). An "untaken" status indicates the absence of active DNS A-records at the exact moment of querying.
           </p>
         </div>
@@ -174,9 +175,9 @@
       </section>
 
       <!-- Section 5 -->
-      <section class="space-y-2.5">
-        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-sm">05.</span> Refunds & License Cancellation
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-base sm:text-lg">05.</span> Refunds & License Cancellation
         </h2>
         <p class="text-ink-800 leading-relaxed">
           License keys and subscriptions are sold and managed through Gumroad. Refunds and chargebacks automatically invalidate associated license keys on our Cloudflare Worker verification endpoints. In the event of a chargeback or refund, all Pro tier functionality tied to that license key terminates immediately.
@@ -184,9 +185,9 @@
       </section>
 
       <!-- Section 6 -->
-      <section class="space-y-2.5">
-        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-sm">06.</span> Limitation of Liability
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-base sm:text-lg">06.</span> Limitation of Liability
         </h2>
         <p class="text-ink-800 leading-relaxed">
           FegoName is provided on an "as-is" and "as-available" basis without warranties of any kind. Under no circumstances will FegoName or its operators be liable for indirect, incidental, consequential, or punitive damages arising from the inability to register a proposed domain name, subsequent trademark disputes, or third-party API interruptions (including Cloudflare or Groq outages).
@@ -194,9 +195,9 @@
       </section>
 
       <!-- Section 7 -->
-      <section class="space-y-2.5">
-        <h2 class="text-lg sm:text-xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-sm">07.</span> Contact Information
+      <section class="space-y-3">
+        <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
+          <span class="text-teal-600 font-mono text-base sm:text-lg">07.</span> Contact Information
         </h2>
         <p class="text-ink-800 leading-relaxed">
           Questions regarding these Terms of Service can be directed via our <a href="contact.html" class="text-teal-600 hover:text-teal-800 font-semibold underline underline-offset-2">Contact Page</a>.
@@ -208,7 +209,7 @@
 
   <!-- Footer -->
   <footer class="border-t border-ink-200 bg-white py-6 mt-12 sm:mt-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ink-500">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink-500">
       <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
         <a href="terms.html" class="text-teal-700 font-semibold transition">Terms</a>
         <a href="privacy.html" class="hover:text-ink-900 transition">Privacy</a>

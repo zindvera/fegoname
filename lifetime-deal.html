@@ -79,13 +79,13 @@
   <header class="border-b border-ink-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
       <a href="index.html" class="flex items-center hover:opacity-85 transition" title="FegoName">
-        <img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=120"
-          alt="FegoName Logo" onerror="this.onerror=null; this.src='https://placehold.co/96x96/09090b/2dd4bf?text=FN';"
-          class="w-8 h-8 rounded-xl object-cover shadow-xs border border-ink-800" />
+        <img src="media/logo/fegoname.png"
+          alt="FegoName Logo"
+          class="h-8" />
       </a>
 
       <nav class="flex items-center gap-3 sm:gap-6">
-        <a href="index.html" class="text-sm font-semibold text-ink-600 hover:text-ink-950 transition">
+        <a href="index.html" class="text-sm sm:text-base font-semibold text-ink-600 hover:text-ink-950 transition">
           Home &rarr;
         </a>
       </nav>
@@ -100,15 +100,15 @@
       <div class="bg-white border border-ink-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-7">
 
         <!-- Badge Lockup -->
-        <div class="text-center space-y-2.5">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs font-semibold uppercase tracking-wider">
+        <div class="text-center space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider">
             <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
             <span>Lifetime Deal Access</span>
           </div>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-ink-950 tracking-tight">
             Redeem Your Lifetime Access
           </h1>
-          <p class="text-sm sm:text-base text-ink-600 leading-relaxed max-w-sm mx-auto">
+          <p class="text-base sm:text-[17px] text-ink-600 leading-relaxed max-w-sm mx-auto">
             Enter your AppSumo or promotional redemption code below to permanently unlock FegoName Pro.
           </p>
         </div>
@@ -116,7 +116,7 @@
         <!-- Redemption Form -->
         <form id="redeemForm" class="space-y-4">
           <div>
-            <label for="redeemCode" class="block text-xs font-bold font-mono uppercase tracking-wider text-ink-700 mb-1.5">
+            <label for="redeemCode" class="block text-xs sm:text-sm font-bold font-mono uppercase tracking-wider text-ink-700 mb-2">
               Redemption Code
             </label>
             <input
@@ -133,7 +133,7 @@
           <button
             type="submit"
             id="redeemBtn"
-            class="w-full py-3.5 px-6 rounded-xl bg-ink-950 hover:bg-black text-white font-semibold text-sm sm:text-base transition shadow-xs flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed border border-ink-800"
+            class="w-full py-3.5 px-6 rounded-xl bg-ink-950 hover:bg-black text-white font-semibold text-base transition shadow-xs flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed border border-ink-800"
           >
             <svg class="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
@@ -143,14 +143,14 @@
         </form>
 
         <!-- Feedback / Result Box -->
-        <div id="statusBox" class="hidden rounded-2xl p-4 sm:p-5 text-sm sm:text-base leading-relaxed transition-all"></div>
+        <div id="statusBox" class="hidden rounded-2xl p-4 sm:p-5 text-base leading-relaxed transition-all"></div>
 
         <!-- 3-Step Guide -->
         <div class="pt-6 border-t border-ink-100 text-left space-y-4">
-          <h3 class="text-xs sm:text-sm font-bold font-mono uppercase tracking-wider text-ink-900">
+          <h3 class="text-sm sm:text-base font-bold font-mono uppercase tracking-wider text-ink-900">
             How Activation Works
           </h3>
-          <ol class="space-y-3.5 text-sm sm:text-base text-ink-700 list-decimal pl-5 leading-relaxed">
+          <ol class="space-y-3.5 text-base sm:text-[17px] text-ink-700 list-decimal pl-5 leading-relaxed">
             <li>Paste the redemption code received from your purchase.</li>
             <li>Click <strong class="text-ink-950 font-bold">Activate Lifetime Access</strong>.</li>
             <li>You're all set—start generating untaken brand and product names!</li>
@@ -159,14 +159,19 @@
 
       </div>
 
-      <!-- Distinct Note Outside Below The Box -->
-      <div class="p-4 sm:p-5 rounded-2xl bg-teal-50/90 border border-teal-200 text-sm sm:text-base text-teal-950 leading-relaxed flex items-start gap-3 shadow-2xs">
-        <svg class="w-5 h-5 text-teal-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <!-- Distinct FAQ / Recovery Note Outside Below The Box -->
+      <div class="p-5 sm:p-6 rounded-2xl bg-teal-50/90 border border-teal-200 text-teal-950 flex items-start gap-3.5 shadow-2xs">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-teal-600 shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
-        <p>
-          <strong class="text-teal-900 font-bold">Lost access after clearing history or switching devices?</strong> Simply return to this page and enter your redemption code again to restore your Lifetime Access anytime.
-        </p>
+        <div class="space-y-2">
+          <p class="text-base sm:text-[17px] font-bold text-teal-900 leading-snug">
+            Lost access after clearing history or switching devices?
+          </p>
+          <p class="text-base sm:text-[17px] text-teal-950 leading-relaxed">
+            Simply return to this page and enter your redemption code again to restore your Lifetime Access anytime.
+          </p>
+        </div>
       </div>
 
     </div>
@@ -174,14 +179,14 @@
 
   <!-- Toast Notification -->
   <div id="toast"
-    class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-200 bg-ink-950 text-white px-4 py-2.5 rounded-xl shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2 border border-ink-800">
+    class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-200 bg-ink-950 text-white px-4 py-2.5 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2 border border-ink-800">
     <span class="w-2 h-2 rounded-full bg-teal-400"></span>
     <span id="toastMessage">Copied to clipboard</span>
   </div>
 
   <!-- Footer -->
   <footer class="border-t border-ink-200 bg-white py-6">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-ink-500">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink-500">
       <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
         <a href="terms.html" class="hover:text-ink-900 transition">Terms</a>
         <a href="privacy.html" class="hover:text-ink-900 transition">Privacy</a>
@@ -238,27 +243,27 @@
           localStorage.setItem('fegoname_license_timestamp', Date.now().toString());
           localStorage.removeItem('fegoname_limit_locked_until');
 
-          statusBox.className = 'rounded-2xl p-5 bg-teal-50 border border-teal-200 text-teal-950 space-y-3';
+          statusBox.className = 'rounded-2xl p-5 bg-teal-50 border border-teal-200 text-teal-950 space-y-3.5';
           statusBox.innerHTML = `
             <div class="flex items-center gap-2 text-teal-800 font-bold">
               <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
               </svg>
-              <span class="text-sm sm:text-base">Lifetime Access Activated!</span>
+              <span class="text-base sm:text-lg">Lifetime Access Activated!</span>
             </div>
-            <p class="text-xs sm:text-sm text-teal-900 leading-relaxed">
+            <p class="text-sm sm:text-base text-teal-900 leading-relaxed">
               Your device is now permanently registered for FegoName Pro. Here is your active license key for your records:
             </p>
             <div class="flex items-center gap-2">
-              <div class="flex-grow px-3 py-2 bg-white rounded-xl border border-teal-200 font-mono text-xs sm:text-sm font-bold text-ink-950 truncate select-all">
+              <div class="flex-grow px-3.5 py-2.5 bg-white rounded-xl border border-teal-200 font-mono text-sm sm:text-base font-bold text-ink-950 truncate select-all">
                 ${finalLicenseKey}
               </div>
-              <button type="button" onclick="copyKey('${finalLicenseKey}')" class="px-3 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold transition">
+              <button type="button" onclick="copyKey('${finalLicenseKey}')" class="px-3.5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold transition">
                 Copy
               </button>
             </div>
             <div class="pt-2">
-              <a href="index.html" class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-ink-950 hover:bg-black text-white font-semibold text-sm transition shadow-xs">
+              <a href="index.html" class="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-ink-950 hover:bg-black text-white font-semibold text-base transition shadow-xs">
                 <span>Launch FegoName App &rarr;</span>
               </a>
             </div>
@@ -267,9 +272,9 @@
           redeemForm.classList.add('hidden');
 
         } else {
-          statusBox.className = 'rounded-2xl p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs sm:text-sm flex items-start gap-2.5';
+          statusBox.className = 'rounded-2xl p-4 sm:p-5 bg-rose-50 border border-rose-200 text-rose-900 text-sm sm:text-base flex items-start gap-2.5 leading-relaxed';
           statusBox.innerHTML = `
-            <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
               <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"></line>
               <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line>
@@ -280,9 +285,9 @@
         }
 
       } catch (err) {
-        statusBox.className = 'rounded-2xl p-4 bg-rose-50 border border-rose-200 text-rose-900 text-xs sm:text-sm flex items-start gap-2.5';
+        statusBox.className = 'rounded-2xl p-4 sm:p-5 bg-rose-50 border border-rose-200 text-rose-900 text-sm sm:text-base flex items-start gap-2.5 leading-relaxed';
         statusBox.innerHTML = `
-          <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
             <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"></line>
             <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"></line>

@@ -431,6 +431,7 @@
     const LS_LICENSE_TIMESTAMP = "fegoname_license_timestamp"; // epoch ms
     const LS_LIMIT_LOCKED = "fegoname_limit_locked_until";    // epoch ms (24h lock for 0 free quota)
     const LS_PACKED_KEY = "fegoname_encoded_groq";
+    const LS_SEEN_HIGHLIGHT = "fegoname_seen_highlight_anim";
 
     let activeModalId = null;
     let cachedQuotaRemaining = 3;
@@ -1346,10 +1347,20 @@
     }
 
     function triggerFreelancerHighlightAnimation() {
+      try {
+        if (localStorage.getItem(LS_SEEN_HIGHLIGHT) === "true") {
+          return;
+        }
+      } catch (e) {}
+
       setTimeout(() => {
         const container = document.getElementById('freelancerHighlight');
         const path = document.getElementById('penPath');
         if (!container || !path) return;
+
+        try {
+          localStorage.setItem(LS_SEEN_HIGHLIGHT, "true");
+        } catch (e) {}
 
         container.classList.add('highlight-pop');
 
