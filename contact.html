@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
   <script>
     tailwind.config = {
@@ -26,7 +26,6 @@
         extend: {
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
             canvas: '#fbfbfb',
@@ -97,7 +96,7 @@
 
     <!-- Document Header -->
     <div class="mb-6 sm:mb-12 border-b border-ink-200/80 pb-6 sm:pb-8 px-4 sm:px-0">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs sm:text-sm lg:text-xs font-semibold uppercase tracking-wider mb-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs sm:text-sm lg:text-xs font-semibold tracking-wide mb-3">
         Direct Support & FAQ
       </div>
       <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink-950">
@@ -109,7 +108,7 @@
     </div>
 
     <!-- Minimalist Contact Card -->
-    <div class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-10 text-base sm:text-[17px] lg:text-base leading-relaxed text-ink-700">
+    <div class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-12 text-base sm:text-[17px] lg:text-base leading-relaxed text-ink-700">
 
       <!-- Centered Email Box -->
       <section class="text-center py-4 sm:py-6 max-w-lg mx-auto space-y-4">
@@ -127,7 +126,7 @@
 
         <!-- Centered Email Address and Action -->
         <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
-          <div class="px-4 py-2.5 rounded-xl bg-ink-50 border border-ink-200 text-base sm:text-lg font-mono font-bold text-ink-950 tracking-tight select-all">
+          <div class="px-4 py-2.5 rounded-xl bg-ink-50 border border-ink-200 text-base sm:text-lg font-semibold text-ink-950 tracking-tight select-all">
             support@fegoname.xyz
           </div>
           <button type="button" onclick="copySupportEmail()"
@@ -141,129 +140,123 @@
         </div>
       </section>
 
-      <!-- Comprehensive FAQ Section -->
-      <section class="space-y-6 pt-8 border-t border-ink-100">
+      <!-- Simple Freelancer-Friendly FAQ Section -->
+      <section class="space-y-8 pt-10 border-t border-ink-100">
         <div>
-          <div class="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm lg:text-xs font-bold text-teal-700 uppercase tracking-wider">
-            <span>Frequently Asked Questions</span>
-          </div>
-          <h3 class="text-2xl sm:text-3xl lg:text-2xl font-extrabold text-ink-950 tracking-tight mt-1.5">
-            Everything you need to know about FegoName
+          <h3 class="text-2xl sm:text-3xl lg:text-2xl font-extrabold text-ink-950 tracking-tight">
+            Frequently Asked Questions
           </h3>
-          <p class="text-base sm:text-[17px] lg:text-sm text-ink-600 mt-1.5 leading-relaxed">
-            Questions categorized across before purchasing, during your naming runs, and post-generation client handover.
-          </p>
         </div>
 
-        <div class="space-y-7 pt-2">
+        <div class="space-y-12">
 
           <!-- Category 1: Before Using & Plans -->
-          <div class="space-y-3.5">
-            <h4 class="text-xs sm:text-sm lg:text-xs uppercase tracking-wider font-mono font-bold text-ink-500">
+          <div class="space-y-4">
+            <h4 class="text-base sm:text-lg lg:text-base font-bold text-ink-900 tracking-tight pb-1">
               1. Before Using & Plans
             </h4>
 
             <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
               <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>What makes FegoName different from regular AI naming tools?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
+                <span>How is FegoName different from other name generators?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
               </summary>
               <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                Most brand name generator tools just throw generic words together that are already registered everywhere. FegoName gives a list of really unique brand or product names with meaning, with no name taken on any domain extension and a high chance of no relevant Google search results. It uses our own secret name-building system that gives really unique, untaken brand or product names.
+                Most name generators suggest common words that are already taken. FegoName creates fresh, unique brand and product names with a clear meaning—and checks that the domain name is completely available before showing it to you.
               </p>
             </details>
 
             <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
               <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>How does the free trial work?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
+                <span>Can I try it for free before paying?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
               </summary>
               <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                You get 3 complete free naming searches with full verification. When searching, FegoName continues checking in the background until it finds untaken names. After your free trial, you can unlock full unlimited searches with a license code.
+                Yes. You get 3 free searches to test everything out. After that, you can upgrade to unlock unlimited searches.
               </p>
             </details>
 
             <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
               <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>What is the Lifetime Deal and how do I receive it?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
+                <span>How do I activate my license after buying?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
               </summary>
               <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                The Lifetime Deal gives you permanent access with a single payment on Gumroad. You receive your license key immediately upon checkout. Just click "Upgrade" in the app, paste the code, and click "Activate".
-              </p>
-            </details>
-          </div>
-
-          <!-- Category 2: During Search & Practical Details -->
-          <div class="space-y-3.5 pt-2">
-            <h4 class="text-xs sm:text-sm lg:text-xs uppercase tracking-wider font-mono font-bold text-ink-500">
-              2. During Searches & How It Works
-            </h4>
-
-            <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
-              <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>Why does FegoName ask for a free Groq API key?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
-              </summary>
-              <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                Groq provides a 100% free account that includes up to 14,400 fast requests every single day. Setting it up takes less than 30 seconds (just sign in with Google and copy your key). This allows you to generate names with ultra-fast speed without ever waiting in queues or experiencing delays.
-              </p>
-            </details>
-
-            <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
-              <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>Is my AI key and client brief safe?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
-              </summary>
-              <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                Yes, completely. Your key stays stored solely inside your personal browser on your computer. It is never saved on our databases or shared with third parties. Your client briefs are used solely to generate the names for your project and are never sold or logged.
-              </p>
-            </details>
-
-            <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
-              <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>How does the live domain check work?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
-              </summary>
-              <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                As names are coined, FegoName queries live web domain records across 14 extensions (.com, .net, .org, .io, .co, .ai, .app, .dev, .xyz, and more). If even a single extension is already registered, that name is discarded. Only names that are completely untaken across all tested extensions make it to your screen.
+                Right after purchase, you receive a license code. Just click the "Upgrade" button at the top of the page, paste your code, and click "Activate".
               </p>
             </details>
           </div>
 
-          <!-- Category 3: After Naming & Client Handover -->
-          <div class="space-y-3.5 pt-2">
-            <h4 class="text-xs sm:text-sm lg:text-xs uppercase tracking-wider font-mono font-bold text-ink-500">
-              3. Handing Names Over to Clients
+          <!-- Category 2: Using FegoName -->
+          <div class="space-y-4 pt-10 border-t border-ink-100">
+            <h4 class="text-base sm:text-lg lg:text-base font-bold text-ink-900 tracking-tight pb-1">
+              2. Using FegoName
             </h4>
 
             <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
               <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>Do I own the names generated for my freelance projects?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
+                <span>Why do I need a free Groq key, and is it hard to set up?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
               </summary>
               <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                Yes, 100%. Any name and rationale you discover is completely yours to pitch, sell, or deliver to your clients. There are no licensing fees, royalties, or ownership claims by FegoName.
+                Groq gives you a 100% free account with thousands of fast searches every day, so you never have to wait in line. Setting it up takes 30 seconds: sign in with Google on Groq, click "Create API Key", and paste it into FegoName.
               </p>
             </details>
 
             <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
               <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>Why are one-click Google & Domain buttons included?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
+                <span>Is my Groq key and what I type kept private?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
               </summary>
               <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                Every generated card includes a one-click Google Title Check and a Domain Check button. This lets you quickly confirm with your own eyes that the name has no existing search footprint before presenting it to your client.
+                Yes. Your Groq key is saved only inside your own browser on your computer—we never store it or see it. Anything you type to describe a business or product is only used to create your names and is never shared with anyone.
               </p>
             </details>
 
             <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
               <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
-                <span>Can I copy the brand rationale directly into my client presentation?</span>
-                <span class="text-teal-600 transition-transform group-open:rotate-45 font-mono text-2xl lg:text-lg font-bold shrink-0">+</span>
+                <span>Are the suggested domain names really untaken?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
               </summary>
               <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
-                Yes! Each suggestion includes a ready-to-use breakdown explaining why the name was crafted, which phonetic elements were blended, and how it communicates your client's core value proposition—ready to paste straight into Figma decks or proposals.
+                Yes. Before showing any name, FegoName checks it across 14 popular domain endings like .com, .net, .org, .io, .co, and .ai. If even one of them is already registered by someone else, FegoName skips that name and finds another one for you.
+              </p>
+            </details>
+          </div>
+
+          <!-- Category 3: Sharing Names with Clients -->
+          <div class="space-y-4 pt-10 border-t border-ink-100">
+            <h4 class="text-base sm:text-lg lg:text-base font-bold text-ink-900 tracking-tight pb-1">
+              3. Sharing Names with Clients
+            </h4>
+
+            <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
+              <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
+                <span>Can I sell or deliver these names to my clients?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
+              </summary>
+              <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
+                Yes, 100%. Every name and explanation you generate is yours to use in paid client projects with no extra fees or restrictions.
+              </p>
+            </details>
+
+            <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
+              <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
+                <span>How do I double-check a name before sending it to a client?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
+              </summary>
+              <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
+                Every name card has a "Google Check" button and a "Domain Check" button. One click opens Google search results or a domain registrar so you can confirm everything yourself in seconds.
+              </p>
+            </details>
+
+            <details class="group border border-ink-200 rounded-2xl bg-ink-50/40 p-5 sm:p-6 lg:p-5 transition hover:border-teal-300 open:bg-white open:shadow-2xs">
+              <summary class="font-bold text-ink-950 cursor-pointer list-none flex items-center justify-between gap-3 text-lg sm:text-xl lg:text-base leading-snug">
+                <span>Does FegoName explain what each name means?</span>
+                <span class="text-teal-600 transition-transform group-open:rotate-45 text-2xl lg:text-xl font-semibold leading-none shrink-0">+</span>
+              </summary>
+              <p class="mt-4 lg:mt-3 text-[17px] sm:text-lg lg:text-[15px] text-ink-800 leading-relaxed pt-3.5 lg:pt-2.5 border-t border-ink-100">
+                Yes. Each name comes with a short, easy-to-read explanation of how the name was formed and why it fits the business or product—so you can easily explain your picks to your client.
               </p>
             </details>
           </div>
@@ -297,7 +290,7 @@
 
   <script>
     function copySupportEmail() {
-      const email = 'support@fegoname.site';
+      const email = 'support@fegoname.xyz';
       const el = document.createElement('textarea');
       el.value = email;
       document.body.appendChild(el);
