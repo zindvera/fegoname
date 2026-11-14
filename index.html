@@ -132,7 +132,7 @@
       </a>
 
       <div class="flex items-center gap-2.5 sm:gap-3">
-        <!-- Settings Button for Groq API Key -->
+        <!-- Settings Button for Groq API Key (Pro Only) -->
         <button id="openSettingsBtn" type="button"
           class="hidden p-2 sm:px-3 sm:py-2 text-xs sm:text-sm font-semibold text-ink-700 hover:text-ink-950 hover:bg-ink-100 rounded-xl transition items-center gap-1.5 border border-ink-200 shadow-2xs"
           title="Custom Groq AI API Key">
@@ -319,7 +319,7 @@
     </div>
   </div>
 
-  <!-- GROQ SETTINGS MODAL -->
+  <!-- GROQ SETTINGS MODAL (PRO ONLY) -->
   <div id="settingsModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 modal-backdrop">
     <div
       class="bg-white border border-ink-200 rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[92vh] flex flex-col overflow-hidden">
@@ -421,6 +421,8 @@
     const LS_LIMIT_LOCKED = "fegoname_limit_locked_until";    // epoch ms (24h lock for 0 free quota)
     const LS_PACKED_KEY = "fegoname_encoded_groq";
     const LS_SEEN_HIGHLIGHT = "fegoname_seen_highlight_anim";
+    const LS_SEEN_EXAMPLE_BRAND = "fegoname_seen_example_brand";
+    const LS_SEEN_EXAMPLE_PRODUCT = "fegoname_seen_example_product";
 
     let activeModalId = null;
     let cachedQuotaRemaining = 3;
@@ -444,6 +446,35 @@
     const keyStatusText = document.getElementById('keyStatusText');
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toastMessage');
+
+    function hasSeenExample(mode) {
+      try {
+        const key = mode === 'product' ? LS_SEEN_EXAMPLE_PRODUCT : LS_SEEN_EXAMPLE_BRAND;
+        return localStorage.getItem(key) === "true";
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function markExampleSeen(mode) {
+      try {
+        const key = mode === 'product' ? LS_SEEN_EXAMPLE_PRODUCT : LS_SEEN_EXAMPLE_BRAND;
+        localStorage.setItem(key, "true");
+      } catch (e) {}
+      syncAllSampleButtonsVisibility();
+    }
+
+    function syncAllSampleButtonsVisibility() {
+      turnBlocks.forEach((state, turnId) => {
+        const btn = document.getElementById(`sampleBtn-${turnId}`);
+        if (!btn) return;
+        if (hasSeenExample(state.mode)) {
+          btn.classList.add('hidden');
+        } else {
+          btn.classList.remove('hidden');
+        }
+      });
+    }
 
     function packKey(raw) {
       if (!raw) return "";
@@ -502,16 +533,12 @@
 
     function updateAllQuotaPills() {
       const isPro = localStorage.getItem(LS_PRO) === "true";
-      const savedKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
       const pills = document.querySelectorAll('.freeTrialPill');
 
       pills.forEach(pill => {
         if (isPro) {
           pill.textContent = "";
           pill.className = "freeTrialPill hidden";
-        } else if (savedKey && savedKey.startsWith("gsk_")) {
-          pill.textContent = "Custom Key Active";
-          pill.className = "freeTrialPill font-medium text-teal-700 font-mono text-xs";
         } else {
           const statusStr = cachedQuotaRemaining > 0 ? `${cachedQuotaRemaining} free searches remaining` : `0 free searches left`;
           const statusClass = cachedQuotaRemaining > 0 ? "freeTrialPill font-medium text-ink-600" : "freeTrialPill font-semibold text-rose-600";
@@ -690,6 +717,8 @@
       };
       turnBlocks.set(turnId, state);
 
+      const hideExampleClass = hasSeenExample("brand") ? "hidden" : "";
+
       const section = document.createElement('div');
       section.id = `turn-${turnId}`;
       section.className = "turn-block space-y-6 pt-4";
@@ -714,9 +743,9 @@
               class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-ink-900">
               Describe what the business does
             </label>
-            <button type="button" onclick="loadTurnSample(${turnId})"
-              class="text-xs sm:text-sm text-teal-600 hover:text-teal-800 hover:underline font-semibold transition">
-              Load sample brief
+            <button type="button" id="sampleBtn-${turnId}" onclick="loadTurnSample(${turnId})"
+              class="${hideExampleClass} text-xs sm:text-sm text-teal-600 hover:text-teal-800 hover:underline font-semibold transition">
+              Try an example
             </button>
           </div>
 
@@ -786,7 +815,6 @@
               </svg>
               <span id="loadMoreText-${turnId}">+ Load More Unique Names</span>
             </button>
-            <div id="totalFoundBadge-${turnId}" class="text-ink-400 font-mono text-xs mt-1"></div>
           </div>
         </section>
       `;
@@ -811,6 +839,7 @@
       const inputLabel = document.getElementById(`inputLabel-${turnId}`);
       const textarea = document.getElementById(`descriptionInput-${turnId}`);
       const resultsHeader = document.getElementById(`resultsHeader-${turnId}`);
+      const sampleBtn = document.getElementById(`sampleBtn-${turnId}`);
 
       const activeClass = "pb-1 px-1 text-sm sm:text-base font-bold border-b-2 border-teal-600 text-teal-700 transition-colors";
       const inactiveClass = "pb-1 px-1 text-sm sm:text-base font-medium border-b-2 border-transparent text-ink-500 hover:text-ink-950 transition-colors";
@@ -827,6 +856,14 @@
         inputLabel.textContent = "Describe what the product does";
         textarea.placeholder = "e.g. An all-in-one SaaS platform for business owners to track daily revenue, investments, and operating expenses.";
         if (resultsHeader) resultsHeader.textContent = "Available Product Names";
+      }
+
+      if (sampleBtn) {
+        if (hasSeenExample(mode)) {
+          sampleBtn.classList.add('hidden');
+        } else {
+          sampleBtn.classList.remove('hidden');
+        }
       }
     };
 
@@ -884,6 +921,9 @@
         return;
       }
 
+      // Immediately hide "Try an example" for the active mode (brand or product) and save seen status
+      markExampleSeen(state.mode);
+
       const isPro = localStorage.getItem(LS_PRO) === "true";
       const userKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
       const savedLicense = localStorage.getItem(LS_LICENSE) || "";
@@ -898,8 +938,8 @@
         }
       } else {
         const lockedUntil = parseInt(localStorage.getItem(LS_LIMIT_LOCKED) || "0", 10);
-        if (!userKey && Date.now() < lockedUntil) {
-          upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro or add your Groq key.`;
+        if (Date.now() < lockedUntil) {
+          upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro for unlimited access.`;
           openModal('upgradeModal');
           return;
         }
@@ -922,7 +962,6 @@
       const loadMoreContainer = document.getElementById(`loadMoreContainer-${turnId}`);
       const loadMoreSpinner = document.getElementById(`loadMoreSpinner-${turnId}`);
       const loadMoreText = document.getElementById(`loadMoreText-${turnId}`);
-      const totalFoundBadge = document.getElementById(`totalFoundBadge-${turnId}`);
 
       if (!isAppend) {
         resultsList.innerHTML = "";
@@ -958,11 +997,12 @@
         const endpoint = `${BACKEND_URL}/api/process/${route}`;
         const headers = { "Content-Type": "application/json" };
 
+        // Only attach Pro license and custom Groq API key when user has unlocked Pro
         if (isPro && savedLicense && licenseStatus === "active") {
           headers["x-license-key"] = savedLicense;
-        }
-        if (userKey && userKey.startsWith("gsk_")) {
-          headers["x-groq-key"] = userKey;
+          if (userKey && userKey.startsWith("gsk_")) {
+            headers["x-groq-key"] = userKey;
+          }
         }
 
         while (batchAdded < MIN_REQUIRED_NAMES && round <= MAX_SEARCH_LOOPS) {
@@ -1004,9 +1044,9 @@
             const lockExpiry = Date.now() + (24 * 60 * 60 * 1000);
             localStorage.setItem(LS_LIMIT_LOCKED, lockExpiry.toString());
             syncBackendQuota(0);
-            upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro or add your Groq key.`;
+            upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro for unlimited access.`;
             openModal('upgradeModal');
-            throw new Error("Free trial limit reached. Unlock Pro or add your Groq key.");
+            throw new Error("Free trial limit reached. Unlock Pro for unlimited access.");
           }
 
           if (!res.ok) {
@@ -1014,7 +1054,8 @@
             const errMsg = errData.error || errData.message || `Server error ${res.status}`;
             const lowerErr = errMsg.toLowerCase();
 
-            if (res.status === 401 || lowerErr.includes("api key") || lowerErr.includes("groq") || lowerErr.includes("unauthorized") || lowerErr.includes("invalid_api_key")) {
+            // ONLY prompt for custom Groq API key if user is in Pro mode
+            if (isPro && (res.status === 401 || lowerErr.includes("api key") || lowerErr.includes("groq") || lowerErr.includes("unauthorized") || lowerErr.includes("invalid_api_key"))) {
               localStorage.removeItem(LS_PACKED_KEY);
               if (groqKeyInput) groqKeyInput.value = "";
               updateGroqKeyUI();
@@ -1023,6 +1064,11 @@
               settingsModalSubtitle.textContent = "Your Groq API key is expired or invalid. Please paste a valid key below.";
               openModal('settingsModal');
               throw new Error("Your Groq API key is invalid or expired. Please update it.");
+            }
+
+            // For Free Trial users, never expose or ask for a Groq API key
+            if (!isPro && (res.status === 401 || lowerErr.includes("api key") || lowerErr.includes("groq") || lowerErr.includes("invalid_api_key"))) {
+              throw new Error("Naming service is temporarily busy. Please try again in a moment.");
             }
 
             throw new Error(errMsg);
@@ -1071,7 +1117,6 @@
         if (state.results.length === 0 && !state.isAborted) {
           resultsList.innerHTML = `<div class="p-6 text-center text-sm text-ink-500 bg-white border border-dashed border-ink-200 rounded-2xl">No untaken names found in this batch. Please refine your brief or retry.</div>`;
         } else if (state.results.length > 0) {
-          totalFoundBadge.textContent = `${state.results.length} untaken names verified`;
           loadMoreContainer.classList.remove('hidden');
 
           if (!state.hasGeneratedOnce) {
@@ -1383,6 +1428,7 @@
       });
 
       openSettingsBtn.addEventListener('click', () => {
+        if (localStorage.getItem(LS_PRO) !== "true") return;
         settingsModalSubtitle.textContent = "Run unlimited fast naming searches (14,400 free requests/day with zero queueing).";
         openModal('settingsModal');
       });
@@ -1395,6 +1441,10 @@
     }
 
     window.openModal = function (id) {
+      // Guard: Never open Groq API Key modal for non-Pro users
+      if (id === 'settingsModal' && localStorage.getItem(LS_PRO) !== "true") {
+        return;
+      }
       const modal = document.getElementById(id);
       if (!modal) return;
       modal.classList.remove('hidden');
