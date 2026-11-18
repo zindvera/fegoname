@@ -203,10 +203,7 @@
     const BACKEND_URL = "https://fegoname-api.fegoname-ai.workers.dev";
 
     function getRedeemUrl() {
-      const isLocal = window.location.protocol === 'file:' || 
-                      window.location.hostname === 'localhost' || 
-                      window.location.hostname === '127.0.0.1';
-      return isLocal ? `${BACKEND_URL}/api/redeem-code` : '/api/redeem-code';
+      return `${BACKEND_URL}/api/redeem-code`;
     }
 
     const redeemForm = document.getElementById('redeemForm');

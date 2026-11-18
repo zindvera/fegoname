@@ -117,6 +117,24 @@
       opacity: 0;
       transition: opacity 0.4s ease-out;
     }
+
+    .tilted-strike {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tilted-strike::after {
+      content: "";
+      position: absolute;
+      left: -4px;
+      right: -4px;
+      top: 50%;
+      height: 2.5px;
+      background-color: #ef4444;
+      border-radius: 9999px;
+      transform: translateY(-50%) rotate(-12deg);
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -265,23 +283,25 @@
         </div>
 
         <!-- 2-Column Responsive Plans Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
           
           <!-- 1-Month Plan Card -->
           <div
-            class="p-5 rounded-2xl border border-ink-200 bg-white hover:border-teal-300 transition flex flex-col justify-between text-center gap-4 shadow-2xs">
-            <div class="space-y-1">
-              <h4 class="text-base font-bold text-ink-950">1-Month Plan</h4>
-              <p class="text-xs text-ink-500 font-medium">Unlock 30 days full access</p>
+            class="p-6 sm:p-7 rounded-2xl border border-ink-200 bg-white hover:border-teal-300 transition flex flex-col justify-between text-center gap-6 shadow-2xs">
+            <div class="space-y-3">
+              <div class="space-y-1.5">
+                <h4 class="text-lg font-bold text-ink-950">1-Month Plan</h4>
+                <p class="text-xs sm:text-sm text-ink-500 font-medium">Unlock 30 days full access</p>
+              </div>
               
-              <div class="pt-3">
-                <div class="text-2xl font-extrabold text-ink-950 font-mono tracking-tight">$19</div>
-                <div class="text-[11px] text-ink-400 font-medium">one-time payment</div>
+              <div class="pt-3 space-y-2">
+                <div class="text-3xl font-extrabold text-ink-950 font-mono tracking-tight">$19</div>
+                <div class="text-xs sm:text-sm text-ink-500 font-medium">one-time payment</div>
               </div>
             </div>
 
             <a href="https://fegoname.gumroad.com/l/lgqexs" target="_blank" rel="noopener"
-              class="w-full py-2.5 px-4 rounded-xl bg-ink-950 hover:bg-black text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5 border border-ink-800">
+              class="w-full py-3 px-4 rounded-xl bg-ink-950 hover:bg-black text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5 border border-ink-800">
               <span>Get Code</span>
               <span>→</span>
             </a>
@@ -289,26 +309,28 @@
 
           <!-- Annual Plan Card -->
           <div
-            class="p-5 rounded-2xl border-2 border-teal-600/90 bg-teal-50/30 hover:bg-teal-50/50 transition flex flex-col justify-between text-center gap-4 shadow-xs relative">
-            <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-teal-600 text-white font-mono text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-2xs">
-              Save 35%
+            class="p-6 sm:p-7 rounded-2xl border-2 border-teal-600/90 bg-teal-50/30 hover:bg-teal-50/50 transition flex flex-col justify-between text-center gap-6 shadow-xs relative">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-teal-600 text-white font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-full shadow-2xs">
+              Save 57%
             </span>
 
-            <div class="space-y-1 pt-1">
-              <h4 class="text-base font-bold text-ink-950">Annual Plan</h4>
-              <p class="text-xs text-teal-800 font-medium">Unlock 365 days full access</p>
+            <div class="space-y-3 pt-1">
+              <div class="space-y-1.5">
+                <h4 class="text-lg font-bold text-ink-950">Annual Plan</h4>
+                <p class="text-xs sm:text-sm text-teal-800 font-medium">Unlock 365 days full access</p>
+              </div>
               
-              <div class="pt-3">
-                <div class="flex items-center justify-center gap-2">
-                  <span class="text-2xl font-extrabold text-ink-300 line-through font-mono tracking-tight">$228</span>
-                  <span class="text-2xl font-extrabold text-teal-800 font-mono tracking-tight">$149</span>
+              <div class="pt-3 space-y-2">
+                <div class="flex items-center justify-center gap-3">
+                  <span class="tilted-strike text-2xl font-extrabold text-ink-400 font-mono tracking-tight">$228</span>
+                  <span class="text-3xl font-extrabold text-teal-800 font-mono tracking-tight">$99</span>
                 </div>
-                <div class="text-[11px] text-teal-700 font-medium">that means $12.40 per month</div>
+                <div class="text-xs sm:text-sm text-teal-800 font-semibold">that means $8.25 per month</div>
               </div>
             </div>
 
             <a href="https://fegoname.gumroad.com/l/wrpust" target="_blank" rel="noopener"
-              class="w-full py-2.5 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5">
+              class="w-full py-3 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5">
               <span>Get Code</span>
               <span>→</span>
             </a>
