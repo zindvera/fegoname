@@ -469,6 +469,7 @@
     let activeModalId = null;
     let cachedQuotaRemaining = 3;
     let turnCounter = 0;
+    let cachedDeviceId = null;
 
     // State per turn block
     const turnBlocks = new Map();
@@ -490,6 +491,96 @@
     const toastMessage = document.getElementById('toastMessage');
     const topErrorAlert = document.getElementById('topErrorAlert');
     const topErrorMessage = document.getElementById('topErrorMessage');
+
+    async function getDeviceId() {
+      if (cachedDeviceId) return cachedDeviceId;
+
+      const signals = [];
+
+      signals.push(navigator.hardwareConcurrency || "0");
+      signals.push(navigator.deviceMemory || "0");
+      signals.push(navigator.platform || "unknown");
+      signals.push(navigator.maxTouchPoints || "0");
+      signals.push(`${screen.width}x${screen.height}x${screen.colorDepth}`);
+      try {
+        signals.push(Intl.DateTimeFormat().resolvedOptions().timeZone || "utc");
+      } catch (e) {
+        signals.push("utc");
+      }
+
+      try {
+        const glCanvas = document.createElement("canvas");
+        const gl = glCanvas.getContext("webgl") || glCanvas.getContext("experimental-webgl");
+        if (gl) {
+          const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+          if (debugInfo) {
+            signals.push(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || "");
+            signals.push(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || "");
+          } else {
+            signals.push(gl.getParameter(gl.RENDERER) || "");
+          }
+        }
+      } catch (e) {
+        signals.push("no-webgl");
+      }
+
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 220;
+        canvas.height = 40;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.textBaseline = "top";
+          ctx.font = "14px 'Arial'";
+          ctx.fillStyle = "#f60";
+          ctx.fillRect(10, 5, 62, 20);
+          ctx.fillStyle = "#069";
+          ctx.fillText("FegoName-FP-2026!", 4, 10);
+          ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+          ctx.fillText("FegoName-FP-2026!", 6, 12);
+          signals.push(canvas.toDataURL());
+        }
+      } catch (e) {
+        signals.push("no-canvas");
+      }
+
+      const rawFingerprint = signals.join("||");
+
+      try {
+        if (window.crypto && window.crypto.subtle) {
+          const msgBuffer = new TextEncoder().encode(rawFingerprint);
+          const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          cachedDeviceId = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+          return cachedDeviceId;
+        }
+      } catch (e) {}
+
+      let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+      for (let i = 0; i < rawFingerprint.length; i++) {
+        const ch = rawFingerprint.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+      }
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+      cachedDeviceId = "dev_" + (h2 >>> 0).toString(16).padStart(8, "0") + (h1 >>> 0).toString(16).padStart(8, "0");
+
+      return cachedDeviceId;
+    }
+
+    async function consumeFreeQuotaInBackground(deviceId) {
+      try {
+        await fetch(`${BACKEND_URL}/api/consume-quota`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceId
+          },
+          body: JSON.stringify({ deviceId })
+        });
+      } catch (e) {}
+    }
 
     function showErrorAlert(msg) {
       if (!topErrorAlert || !topErrorMessage) return;
@@ -640,7 +731,12 @@
       let remaining = liveRemaining;
       if (remaining === null) {
         try {
-          const res = await fetch(`${BACKEND_URL}/api/quota-status`);
+          const deviceId = await getDeviceId();
+          const res = await fetch(`${BACKEND_URL}/api/quota-status`, {
+            headers: {
+              "x-device-id": deviceId
+            }
+          });
           if (res.ok) {
             const data = await res.json();
             if (typeof data.remaining === "number") {
@@ -1048,12 +1144,17 @@
 
       let batchAdded = 0;
       let round = 1;
+      let quotaConsumedForThisTurn = false;
       const MAX_SEARCH_LOOPS = 5;
 
       try {
+        const deviceId = await getDeviceId();
         const route = state.mode === 'brand' ? 'brand-name' : 'product-name';
         const endpoint = `${BACKEND_URL}/api/process/${route}`;
-        const headers = { "Content-Type": "application/json" };
+        const headers = {
+          "Content-Type": "application/json",
+          "x-device-id": deviceId
+        };
 
         // Only attach Pro license and custom Groq API key when user has unlocked Pro
         if (isPro && savedLicense && licenseStatus === "active") {
@@ -1082,7 +1183,8 @@
               excludeList: excludeList,
               isAppend: isInternalAppend,
               isReplenish: round > 1,
-              count: 20
+              count: 20,
+              deviceId: deviceId
             })
           });
 
@@ -1163,6 +1265,11 @@
               renderCardIntoTurn(entry, resultsList);
               batchAdded++;
 
+              if (!isPro && !quotaConsumedForThisTurn) {
+                quotaConsumedForThisTurn = true;
+                consumeFreeQuotaInBackground(deviceId);
+              }
+
               if (batchAdded >= MAX_TARGET_NAMES) break;
             }
           }
@@ -1182,8 +1289,6 @@
             appendNewSearchTurn();
           }
         }
-
-        syncBackendQuota();
 
       } catch (err) {
         if (err.name !== 'AbortError' && !state.isAborted) {
@@ -1209,6 +1314,8 @@
         loadMoreText.textContent = "+ Load More Unique Names";
         state.isProcessing = false;
         state.abortController = null;
+
+        syncBackendQuota();
       }
     }
 
