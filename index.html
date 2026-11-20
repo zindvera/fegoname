@@ -320,7 +320,7 @@
               </div>
             </div>
 
-            <a href="https://fegoname.gumroad.com/l/lgqexs" target="_blank" rel="noopener"
+            <a href="https://fegoname.gumroad.com/l/30-day-plan" target="_blank" rel="noopener"
               class="w-full py-3 px-4 rounded-xl bg-ink-950 hover:bg-black text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5 border border-ink-800">
               <span>Get Code</span>
               <span>→</span>
@@ -349,7 +349,7 @@
               </div>
             </div>
 
-            <a href="https://fegoname.gumroad.com/l/wrpust" target="_blank" rel="noopener"
+            <a href="https://fegoname.gumroad.com/l/365-day-plan" target="_blank" rel="noopener"
               class="w-full py-3 px-4 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold transition active:scale-95 shadow-xs flex items-center justify-center gap-1.5">
               <span>Get Code</span>
               <span>→</span>
@@ -806,8 +806,8 @@
               localStorage.setItem(LS_PRO, "false");
               localStorage.setItem(LS_LICENSE_STATUS, "invalid");
               localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
-              if (data.isExpired) {
-                upgradeModalSubtitle.textContent = data.message || "Your license code has expired. Please enter a renewed license code.";
+              if (data.expired || data.isExpired) {
+                upgradeModalSubtitle.textContent = data.error || data.message || "Your license code has expired. Please enter a renewed license code.";
                 openModal('upgradeModal');
               }
             }
@@ -1192,13 +1192,13 @@
 
           if (res.status === 403) {
             const errData = await res.json().catch(() => ({}));
-            if (errData.isExpired) {
+            if (errData.expired || errData.isExpired) {
               localStorage.setItem(LS_PRO, "false");
               localStorage.setItem(LS_LICENSE_STATUS, "invalid");
               applyFreeUI();
-              upgradeModalSubtitle.textContent = errData.message || "Your license code has expired. Please enter a renewed license code.";
+              upgradeModalSubtitle.textContent = errData.error || errData.message || "Your license code has expired. Please enter a renewed license code.";
               openModal('upgradeModal');
-              throw new Error(errData.message || "Your license has expired.");
+              throw new Error(errData.error || errData.message || "Your license has expired.");
             }
 
             const lockExpiry = Date.now() + (24 * 60 * 60 * 1000);
