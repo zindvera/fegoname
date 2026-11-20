@@ -211,7 +211,7 @@
       <div class="pt-1">
         <span id="freelancerHighlight" class="pen-underline-container">
           <p class="text-sm sm:text-base font-semibold text-teal-600 tracking-tight select-none">
-            For freelancers providing brand or product naming services
+            For freelancers & agencies providing brand or product naming services to clients
           </p>
           <svg class="pen-stroke-svg" viewBox="0 0 500 8" fill="none" preserveAspectRatio="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -251,7 +251,7 @@
             Unlock Fego<span class="text-teal-600">Name</span>
           </h3>
           <p id="upgradeModalSubtitle" class="text-xs sm:text-sm text-ink-600 mt-1 leading-relaxed">
-            Full unlimited access for freelancers providing naming services to clients.
+            Full unlimited access for freelancers & agencies providing naming services to clients.
           </p>
         </div>
         <button type="button" onclick="closeModal('upgradeModal')"
@@ -311,12 +311,12 @@
             <div class="space-y-3">
               <div class="space-y-1.5">
                 <h4 class="text-lg font-bold text-ink-950">1-Month Plan</h4>
-                <p class="text-xs sm:text-sm text-ink-500 font-medium">Unlock 30 days full access</p>
+                <p class="text-xs sm:text-sm text-ink-500 font-medium">30 days full access</p>
               </div>
               
               <div class="pt-3 space-y-2">
                 <div class="text-3xl font-extrabold text-ink-950 font-mono tracking-tight">$19</div>
-                <div class="text-xs sm:text-sm text-ink-500 font-medium">one-time payment</div>
+                <div class="text-xs sm:text-sm text-ink-500 font-medium">One-time payment · No auto-renewal</div>
               </div>
             </div>
 
@@ -337,7 +337,7 @@
             <div class="space-y-3 pt-1">
               <div class="space-y-1.5">
                 <h4 class="text-lg font-bold text-ink-950">Annual Plan</h4>
-                <p class="text-xs sm:text-sm text-teal-800 font-medium">Unlock 365 days full access</p>
+                <p class="text-xs sm:text-sm text-teal-800 font-medium">365 days full access</p>
               </div>
               
               <div class="pt-3 space-y-2">
@@ -345,7 +345,7 @@
                   <span class="tilted-strike text-2xl font-extrabold text-ink-400 font-mono tracking-tight">$228</span>
                   <span class="text-3xl font-extrabold text-teal-800 font-mono tracking-tight">$99</span>
                 </div>
-                <div class="text-xs sm:text-sm text-teal-800 font-semibold">that means $8.25 per month</div>
+                <div class="text-xs sm:text-sm text-teal-800 font-semibold">One-time payment ($8.25/mo) · No auto-renewal</div>
               </div>
             </div>
 
@@ -1591,7 +1591,7 @@
       appendNewSearchTurn();
 
       openUpgradeBtn.addEventListener('click', () => {
-        upgradeModalSubtitle.textContent = "Full unlimited access for freelancers providing naming services to clients.";
+        upgradeModalSubtitle.textContent = "Full unlimited access for freelancers & agencies providing naming services to clients.";
         syncLicenseInputUI();
         openModal('upgradeModal');
       });
