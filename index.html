@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FegoName — Brand & Product Naming AI for Freelancers</title>
+  <title>FegoName — Brand & Product Naming AI for Freelancers & Agencies</title>
 
   <!-- Favicons & Web Manifest -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -904,7 +904,7 @@
           <form id="namingForm-${turnId}" onsubmit="handleTurnSubmit(event, ${turnId})" class="space-y-4">
             <div>
               <textarea id="descriptionInput-${turnId}" rows="3" required
-                placeholder="e.g. A software studio focused on building lightweight SaaS tools for small business clients."
+                placeholder="e.g. A premium bakery store making creative cakes, breads, and baked products for birthdays and special celebrations."
                 class="w-full bg-canvas border border-ink-200 rounded-xl p-3.5 sm:p-4 text-base text-ink-950 placeholder-ink-400 focus:outline-none focus:border-teal-600 focus:ring-1 focus:ring-teal-600 focus:bg-white transition resize-none leading-relaxed"></textarea>
 
               <div class="mt-2.5 flex items-center justify-between text-xs">
@@ -1000,13 +1000,13 @@
         tabBrand.className = activeClass;
         tabProduct.className = inactiveClass;
         inputLabel.textContent = "Describe what the business does";
-        textarea.placeholder = "e.g. A software studio focused on building lightweight SaaS tools for small business clients.";
+        textarea.placeholder = "e.g. A premium bakery store making creative cakes, breads, and baked products for birthdays and special celebrations.";
         if (resultsHeader) resultsHeader.textContent = "Available Brand Names";
       } else {
         tabProduct.className = activeClass;
         tabBrand.className = inactiveClass;
         inputLabel.textContent = "Describe what the product does";
-        textarea.placeholder = "e.g. An all-in-one SaaS platform for business owners to track daily revenue, investments, and operating expenses.";
+        textarea.placeholder = "e.g. A special gift box with sweet pastries, assorted chocolates, and a custom message card for birthdays and celebrations.";
         if (resultsHeader) resultsHeader.textContent = "Available Product Names";
       }
 
@@ -1026,9 +1026,9 @@
       const wordCountLabel = document.getElementById(`wordCountLabel-${turnId}`);
 
       if (state.mode === 'brand') {
-        textarea.value = "A software studio focused on building lightweight SaaS tools for small business clients.";
+        textarea.value = "A premium bakery store making creative cakes, breads, and baked products for birthdays and special celebrations.";
       } else {
-        textarea.value = "An all-in-one SaaS platform for business owners to track daily revenue, investments, and operating expenses.";
+        textarea.value = "A special gift box with sweet pastries, assorted chocolates, and a custom message card for birthdays and celebrations.";
       }
       updateWordCountDisplay(textarea, wordCountLabel);
     };
