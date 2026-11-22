@@ -989,7 +989,7 @@
           <form id="namingForm-${turnId}" onsubmit="handleTurnSubmit(event, ${turnId})" class="space-y-4">
             <div>
               <textarea id="descriptionInput-${turnId}" rows="3" required
-                placeholder="e.g. A premium bakery store making creative cakes, breads, and baked products for birthdays and special celebrations."
+                placeholder="e.g. An ecommerce platform that finds and curates creative decor items from suppliers and lists them on the site for customers to buy."
                 class="w-full bg-canvas border border-ink-200 rounded-xl p-3.5 sm:p-4 text-base text-ink-950 placeholder-ink-400 focus:outline-none focus:border-teal-600 focus:ring-1 focus:ring-teal-600 focus:bg-white transition resize-none leading-relaxed"></textarea>
 
               <div class="mt-2.5 flex items-center justify-between text-xs">
@@ -1085,13 +1085,13 @@
         tabBrand.className = activeClass;
         tabProduct.className = inactiveClass;
         inputLabel.textContent = "Describe what the business does";
-        textarea.placeholder = "e.g. A premium bakery store making creative cakes, breads, and baked products for birthdays and special celebrations.";
+        textarea.placeholder = "e.g. An ecommerce platform that finds and curates creative decor items from suppliers and lists them on the site for customers to buy.";
         if (resultsHeader) resultsHeader.textContent = "Available Brand Names";
       } else {
         tabProduct.className = activeClass;
         tabBrand.className = inactiveClass;
         inputLabel.textContent = "Describe what the product does";
-        textarea.placeholder = "e.g. A special gift box with sweet pastries, assorted chocolates, and a custom message card for birthdays and celebrations.";
+        textarea.placeholder = "e.g. A software that tracks daily income and expenses of a business unit in one place.";
         if (resultsHeader) resultsHeader.textContent = "Available Product Names";
       }
 
@@ -1111,9 +1111,9 @@
       const wordCountLabel = document.getElementById(`wordCountLabel-${turnId}`);
 
       if (state.mode === 'brand') {
-        textarea.value = "A premium bakery store making creative cakes, breads, and baked products for birthdays and special celebrations.";
+        textarea.value = "An ecommerce platform that finds and curates creative decor items from suppliers and lists them on the site for customers to buy.";
       } else {
-        textarea.value = "A special gift box with sweet pastries, assorted chocolates, and a custom message card for birthdays and celebrations.";
+        textarea.value = "A software that tracks daily income and expenses of a business unit in one place.";
       }
       updateWordCountDisplay(textarea, wordCountLabel);
     };
