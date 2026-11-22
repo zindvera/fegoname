@@ -140,7 +140,7 @@
 
 <body class="min-h-screen font-sans antialiased flex flex-col justify-between">
 
-  <!-- Header + Attached Sticky Error Alert Banner -->
+  <!-- Header + Attached Sticky Alert Banners -->
   <header id="mainHeader" class="bg-white/95 backdrop-blur-md sticky top-0 z-30">
     <div class="border-b border-ink-200/80">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
@@ -171,6 +171,23 @@
             <span id="upgradeBtnLabel">Upgrade</span>
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Directly Attached Light Green Success Alert Banner Below Nav -->
+    <div id="topSuccessAlert" role="status"
+      class="hidden w-full bg-emerald-50 border-b border-emerald-200 shadow-xs">
+      <div class="w-[calc(100vw-20px)] mx-[10px] md:w-[75vw] md:mx-auto lg:w-[70vw] py-3 flex items-start justify-between gap-4">
+        <div class="flex items-start gap-2.5 text-xs sm:text-sm font-semibold text-emerald-800 leading-relaxed">
+          <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span id="topSuccessMessage"></span>
+        </div>
+        <button type="button" onclick="hideSuccessAlert()" aria-label="Close success message"
+          class="text-emerald-600 hover:text-emerald-900 hover:bg-emerald-100 rounded-lg p-1 transition text-sm font-mono leading-none shrink-0">
+          ✕
+        </button>
       </div>
     </div>
 
@@ -458,6 +475,7 @@
     const LS_PRO = "fegoname_pro_active";
     const LS_LICENSE = "fegoname_license_key";
     const LS_LICENSE_TYPE = "fegoname_license_type";       // "gumroad" | "lifetimedeal"
+    const LS_LICENSE_PLAN = "fegoname_license_plan";       // "lifetime" | "annual" | "monthly"
     const LS_LICENSE_STATUS = "fegoname_license_status";     // "active" | "invalid"
     const LS_LICENSE_TIMESTAMP = "fegoname_license_timestamp"; // epoch ms
     const LS_LIMIT_LOCKED = "fegoname_limit_locked_until";    // epoch ms (24h lock for 0 free quota)
@@ -489,8 +507,75 @@
     const keyStatusText = document.getElementById('keyStatusText');
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toastMessage');
+    const topSuccessAlert = document.getElementById('topSuccessAlert');
+    const topSuccessMessage = document.getElementById('topSuccessMessage');
     const topErrorAlert = document.getElementById('topErrorAlert');
     const topErrorMessage = document.getElementById('topErrorMessage');
+
+    function isLifetimePrefix(keyUpper) {
+      return (
+        keyUpper.startsWith("FGNM-") ||
+        keyUpper.startsWith("FEGO-") ||
+        keyUpper.startsWith("SCROLL-")
+      );
+    }
+
+    function resolvePlanLabel(planRaw, typeRaw) {
+      const p = (planRaw || "").toLowerCase();
+      if (p.includes("30") || p.includes("month")) return "monthly";
+      if (p.includes("365") || p.includes("annual") || p.includes("year")) return "annual";
+      if (p.includes("life") || typeRaw === "lifetimedeal") return "lifetime";
+      return "lifetime";
+    }
+
+    function showPlanActivatedBanner(planKind) {
+      if (!topSuccessAlert || !topSuccessMessage) return;
+      hideErrorAlert();
+
+      if (planKind === "monthly") {
+        topSuccessMessage.textContent = "Your FegoName Pro is activated for 1 Month.";
+      } else if (planKind === "annual") {
+        topSuccessMessage.textContent = "Your FegoName Pro is activated for 1 Year (Annual Plan).";
+      } else {
+        topSuccessMessage.textContent = "Your FegoName Pro is activated for Lifetime.";
+      }
+
+      topSuccessAlert.classList.remove('hidden');
+    }
+
+    window.hideSuccessAlert = function () {
+      if (!topSuccessAlert) return;
+      topSuccessAlert.classList.add('hidden');
+      if (topSuccessMessage) topSuccessMessage.textContent = "";
+    };
+
+    function handleUrlActivationParams() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const activatedPlan = params.get("activated");
+        const urlKey = params.get("key");
+
+        if (urlKey && urlKey.trim().length > 4) {
+          const cleanKey = urlKey.trim();
+          const keyUpper = cleanKey.toUpperCase();
+          const isLifetime = isLifetimePrefix(keyUpper) || activatedPlan === "lifetime";
+
+          localStorage.setItem(LS_PRO, "true");
+          localStorage.setItem(LS_LICENSE, cleanKey);
+          localStorage.setItem(LS_LICENSE_TYPE, isLifetime ? "lifetimedeal" : "gumroad");
+          localStorage.setItem(LS_LICENSE_PLAN, activatedPlan || (isLifetime ? "lifetime" : "annual"));
+          localStorage.setItem(LS_LICENSE_STATUS, "active");
+          localStorage.setItem(LS_LICENSE_TIMESTAMP, Date.now().toString());
+          localStorage.removeItem(LS_LIMIT_LOCKED);
+        }
+
+        if (activatedPlan) {
+          showPlanActivatedBanner(activatedPlan);
+          const cleanUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+      } catch (e) {}
+    }
 
     async function getDeviceId() {
       if (cachedDeviceId) return cachedDeviceId;
@@ -783,7 +868,7 @@
         if (licenseStatus === "active" && (now - licenseTime >= ONE_DAY_MS)) {
           try {
             const cleanKeyUpper = savedLicense.trim().toUpperCase();
-            const inferredType = savedType || (cleanKeyUpper.startsWith("FEGO-") || cleanKeyUpper.startsWith("SCROLL-") ? "lifetimedeal" : "gumroad");
+            const inferredType = savedType || (isLifetimePrefix(cleanKeyUpper) ? "lifetimedeal" : "gumroad");
 
             const res = await fetch(`${BACKEND_URL}/api/verify-license`, {
               method: "POST",
@@ -1183,7 +1268,7 @@
               excludeList: excludeList,
               isAppend: isInternalAppend,
               isReplenish: round > 1,
-              count: 20,
+              count: 12,
               deviceId: deviceId
             })
           });
@@ -1446,7 +1531,7 @@
 
       // Determine initial license type (KV code vs Gumroad)
       const cleanKeyUpper = key.toUpperCase();
-      const initialType = (cleanKeyUpper.startsWith("FEGO-") || cleanKeyUpper.startsWith("SCROLL-")) ? "lifetimedeal" : "gumroad";
+      const initialType = isLifetimePrefix(cleanKeyUpper) ? "lifetimedeal" : "gumroad";
 
       try {
         const res = await fetch(`${BACKEND_URL}/api/verify-license`, {
@@ -1462,9 +1547,12 @@
 
         if (res.ok && data.success) {
           const activeType = data.license_type || initialType;
+          const planKind = resolvePlanLabel(data.plan, activeType);
+
           localStorage.setItem(LS_PRO, "true");
           localStorage.setItem(LS_LICENSE, key);
           localStorage.setItem(LS_LICENSE_TYPE, activeType);
+          localStorage.setItem(LS_LICENSE_PLAN, planKind);
           localStorage.setItem(LS_LICENSE_STATUS, "active");
           localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
           localStorage.removeItem(LS_LIMIT_LOCKED);
@@ -1473,6 +1561,8 @@
           licenseFeedback.textContent = `License activated successfully! (${data.plan || activeType} active)`;
 
           applyProUI();
+          showPlanActivatedBanner(planKind);
+
           setTimeout(() => {
             closeModal('upgradeModal');
             const savedKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
@@ -1480,7 +1570,7 @@
               settingsModalSubtitle.textContent = "Pro unlocked! Now paste your free Groq API key to start naming.";
               openModal('settingsModal');
             }
-          }, 1000);
+          }, 900);
         } else {
           localStorage.setItem(LS_PRO, "false");
           localStorage.setItem(LS_LICENSE, key);
@@ -1585,6 +1675,7 @@
     }
 
     function init() {
+      handleUrlActivationParams();
       syncBackendQuota();
       syncLicenseInputUI();
 
