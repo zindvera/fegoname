@@ -71,6 +71,14 @@
       color: #115e59;
     }
   </style>
+
+  <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "zhznoy3ne1");
+  </script>
 </head>
 
 <body class="min-h-screen font-sans antialiased flex flex-col justify-between">
@@ -78,11 +86,9 @@
   <!-- Header -->
   <header class="border-b border-ink-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
-      
+
       <a href="index.html" class="flex items-center hover:opacity-85 transition" title="FegoName">
-        <img src="media/logo/fegoname.png"
-          alt="FegoName Logo"
-          class="h-8" />
+        <img src="media/logo/fegoname.png" alt="FegoName Logo" class="h-8" />
       </a>
 
       <nav class="flex items-center gap-3 sm:gap-6">
@@ -98,7 +104,8 @@
 
     <!-- Document Header -->
     <div class="mb-6 sm:mb-12 border-b border-ink-200/80 pb-6 sm:pb-8 px-4 sm:px-0">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
         Legal Agreement
       </div>
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-ink-950">
@@ -110,7 +117,8 @@
     </div>
 
     <!-- Content Card -->
-    <div class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-8 sm:space-y-9 text-base sm:text-[17px] md:text-base leading-relaxed text-ink-700">
+    <div
+      class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-8 sm:space-y-9 text-base sm:text-[17px] md:text-base leading-relaxed text-ink-700">
 
       <!-- Section 1 -->
       <section class="space-y-3">
@@ -118,7 +126,9 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">01.</span> Acceptance of Terms
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          By accessing or utilizing FegoName (accessible via this application and related Cloudflare Worker API endpoints), you agree to be bound by these Terms of Service. If you do not accept these terms in full, you must not access or use the platform.
+          By accessing or utilizing FegoName (accessible via this application and related Cloudflare Worker API
+          endpoints), you agree to be bound by these Terms of Service. If you do not accept these terms in full, you
+          must not access or use the platform.
         </p>
       </section>
 
@@ -128,17 +138,24 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">02.</span> Service Architecture & Usage Quotas
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          FegoName offers an AI-powered name generation and DNS availability verification service primarily aimed at freelancers, agencies, and brand strategists.
+          FegoName offers an AI-powered name generation and DNS availability verification service primarily aimed at
+          freelancers, agencies, and brand strategists.
         </p>
         <ul class="list-disc pl-5 space-y-3 text-ink-800 marker:text-teal-600">
           <li>
-            <strong class="text-ink-950">Free Tier Usage:</strong> Free evaluation usage is restricted by client IP address up to a preset limit tracked via Cloudflare KV. Bypassing, spoofing headers, or automating requests to circumvent quota enforcement is prohibited.
+            <strong class="text-ink-950">Free Tier Usage:</strong> Free evaluation usage is restricted by client IP
+            address up to a preset limit tracked via Cloudflare KV. Bypassing, spoofing headers, or automating requests
+            to circumvent quota enforcement is prohibited.
           </li>
           <li>
-            <strong class="text-ink-950">Pro & Lifetime Access:</strong> Paid license access requires a valid license key verified through Gumroad. Access is non-transferable unless expressly agreed in writing.
+            <strong class="text-ink-950">Pro & Lifetime Access:</strong> Paid license access requires a valid license
+            key verified through Gumroad. Access is non-transferable unless expressly agreed in writing.
           </li>
           <li>
-            <strong class="text-ink-950">Bring Your Own Key (BYOK):</strong> Pro accounts operate on a Bring-Your-Own-Key model for high-frequency generations using personal Groq API keys (<code class="font-mono text-sm text-teal-800 bg-teal-50 px-1.5 py-0.5 rounded font-bold">gsk_...</code>). You are solely responsible for compliance with Groq terms and API costs associated with your private key.
+            <strong class="text-ink-950">Bring Your Own Key (BYOK):</strong> Pro accounts operate on a
+            Bring-Your-Own-Key model for high-frequency generations using personal Groq API keys (<code
+              class="font-mono text-sm text-teal-800 bg-teal-50 px-1.5 py-0.5 rounded font-bold">gsk_...</code>). You
+            are solely responsible for compliance with Groq terms and API costs associated with your private key.
           </li>
         </ul>
       </section>
@@ -149,28 +166,38 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">03.</span> Intellectual Property & Generated Output
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          <strong class="text-ink-950">Your Ownership:</strong> You retain complete, unencumbered commercial ownership of all brand names, product titles, and creative meanings generated for your projects or client deliverables. FegoName claims no royalty, equity, or licensing rights in any candidate name selected by you.
+          <strong class="text-ink-950">Your Ownership:</strong> You retain complete, unencumbered commercial ownership
+          of all brand names, product titles, and creative meanings generated for your projects or client deliverables.
+          FegoName claims no royalty, equity, or licensing rights in any candidate name selected by you.
         </p>
         <p class="text-ink-800 leading-relaxed">
-          <strong class="text-ink-950">Platform Property:</strong> The interface design, frontend code, logo, proprietary system prompts, and Cloudflare Worker routing logic remain the intellectual property of FegoName.
+          <strong class="text-ink-950">Platform Property:</strong> The interface design, frontend code, logo,
+          proprietary system prompts, and Cloudflare Worker routing logic remain the intellectual property of FegoName.
         </p>
       </section>
 
       <!-- Section 4 -->
       <section class="space-y-3">
         <h2 class="text-xl sm:text-2xl font-bold text-ink-950 tracking-tight flex items-center gap-2">
-          <span class="text-teal-600 font-mono text-base sm:text-lg">04.</span> Domain Verification & Trademark Disclaimer
+          <span class="text-teal-600 font-mono text-base sm:text-lg">04.</span> Domain Verification & Trademark
+          Disclaimer
         </h2>
-        <div class="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-teal-50/60 border border-teal-200/80 text-teal-950 space-y-2">
+        <div
+          class="p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-teal-50/60 border border-teal-200/80 text-teal-950 space-y-2">
           <p class="font-bold text-xs sm:text-sm uppercase tracking-wider text-teal-900 font-mono">
             Important Legal Notice
           </p>
           <p class="text-[15px] sm:text-base leading-relaxed text-teal-950">
-            FegoName provides automated DNS record queries over Cloudflare DNS-over-HTTPS (DoH) across selected common top-level domain extensions (.com, .net, .org, .io, .co, .ai, etc.). An "untaken" status indicates the absence of active DNS A-records at the exact moment of querying.
+            FegoName provides automated DNS record queries over Cloudflare DNS-over-HTTPS (DoH) across selected common
+            top-level domain extensions (.com, .net, .org, .io, .co, .ai, etc.). An "untaken" status indicates the
+            absence of active DNS A-records at the exact moment of querying.
           </p>
         </div>
         <p class="text-ink-800 leading-relaxed">
-          FegoName does not guarantee that a domain name will remain available until purchase or that it is free of existing trademark, trademark filings, trade dress, or common law claims. You are strictly responsible for conducting formal USPTO/WIPO trademark clearance and ICANN registration through an accredited registrar prior to commercial launch.
+          FegoName does not guarantee that a domain name will remain available until purchase or that it is free of
+          existing trademark, trademark filings, trade dress, or common law claims. You are strictly responsible for
+          conducting formal USPTO/WIPO trademark clearance and ICANN registration through an accredited registrar prior
+          to commercial launch.
         </p>
       </section>
 
@@ -180,7 +207,9 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">05.</span> Refunds & License Cancellation
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          License keys and subscriptions are sold and managed through Gumroad. Refunds and chargebacks automatically invalidate associated license keys on our Cloudflare Worker verification endpoints. In the event of a chargeback or refund, all Pro tier functionality tied to that license key terminates immediately.
+          License keys and subscriptions are sold and managed through Gumroad. Refunds and chargebacks automatically
+          invalidate associated license keys on our Cloudflare Worker verification endpoints. In the event of a
+          chargeback or refund, all Pro tier functionality tied to that license key terminates immediately.
         </p>
       </section>
 
@@ -190,7 +219,10 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">06.</span> Limitation of Liability
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          FegoName is provided on an "as-is" and "as-available" basis without warranties of any kind. Under no circumstances will FegoName or its operators be liable for indirect, incidental, consequential, or punitive damages arising from the inability to register a proposed domain name, subsequent trademark disputes, or third-party API interruptions (including Cloudflare or Groq outages).
+          FegoName is provided on an "as-is" and "as-available" basis without warranties of any kind. Under no
+          circumstances will FegoName or its operators be liable for indirect, incidental, consequential, or punitive
+          damages arising from the inability to register a proposed domain name, subsequent trademark disputes, or
+          third-party API interruptions (including Cloudflare or Groq outages).
         </p>
       </section>
 
@@ -200,7 +232,8 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">07.</span> Contact Information
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          Questions regarding these Terms of Service can be directed via our <a href="contact.html" class="text-teal-600 hover:text-teal-800 font-semibold underline underline-offset-2">Contact Page</a>.
+          Questions regarding these Terms of Service can be directed via our <a href="contact.html"
+            class="text-teal-600 hover:text-teal-800 font-semibold underline underline-offset-2">Contact Page</a>.
         </p>
       </section>
 
@@ -209,7 +242,8 @@
 
   <!-- Footer -->
   <footer class="border-t border-ink-200 bg-white py-6 mt-12 sm:mt-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink-500">
+    <div
+      class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink-500">
       <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
         <a href="terms.html" class="text-teal-700 font-semibold transition">Terms</a>
         <a href="privacy.html" class="hover:text-ink-900 transition">Privacy</a>

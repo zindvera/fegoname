@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/media/favicon/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#E4F2ED">
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,6 +71,13 @@
       color: #115e59;
     }
   </style>
+  <script type="text/javascript">
+      (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "zhznoy3ne1");
+  </script>
 </head>
 
 <body class="min-h-screen font-sans antialiased flex flex-col justify-between">
@@ -79,9 +86,7 @@
   <header class="border-b border-ink-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-30">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
       <a href="index.html" class="flex items-center hover:opacity-85 transition" title="FegoName">
-        <img src="media/logo/fegoname.png"
-          alt="FegoName Logo"
-          class="h-8" />
+        <img src="media/logo/fegoname.png" alt="FegoName Logo" class="h-8" />
       </a>
 
       <nav class="flex items-center gap-3 sm:gap-6">
@@ -97,7 +102,8 @@
 
     <!-- Document Header -->
     <div class="mb-6 sm:mb-12 border-b border-ink-200/80 pb-6 sm:pb-8 px-4 sm:px-0">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 font-mono text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3">
         Storage & Cookies
       </div>
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-ink-950">
@@ -109,7 +115,8 @@
     </div>
 
     <!-- Content Card -->
-    <div class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-8 sm:space-y-9 text-base sm:text-[17px] leading-relaxed text-ink-700">
+    <div
+      class="bg-white border-y sm:border border-ink-200/90 rounded-none sm:rounded-3xl p-5 sm:p-10 shadow-xs space-y-8 sm:space-y-9 text-base sm:text-[17px] leading-relaxed text-ink-700">
 
       <!-- Section 1 -->
       <section class="space-y-3">
@@ -117,7 +124,11 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">01.</span> Our Minimalist Approach to Tracking
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          FegoName does not deploy marketing cookies, cross-site trackers, behavioral ad pixels, or third-party profiling scripts. We prioritize lightning-fast utility performance and customer privacy by relying primarily on standard modern browser client storage (<code class="font-mono text-sm text-teal-800 bg-teal-50 px-1.5 py-0.5 rounded font-bold">localStorage</code>) to maintain your state and preferences.
+          FegoName does not deploy marketing cookies, cross-site trackers, behavioral ad pixels, or third-party
+          profiling scripts. We prioritize lightning-fast utility performance and customer privacy by relying primarily
+          on standard modern browser client storage (<code
+            class="font-mono text-sm text-teal-800 bg-teal-50 px-1.5 py-0.5 rounded font-bold">localStorage</code>) to
+          maintain your state and preferences.
         </p>
       </section>
 
@@ -127,7 +138,8 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">02.</span> Local Storage Keys We Utilize
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          Instead of storing your keys and licenses on our servers, FegoName keeps all working data directly on your local device. Below is a comprehensive breakdown of the exact storage items placed in your browser:
+          Instead of storing your keys and licenses on our servers, FegoName keeps all working data directly on your
+          local device. Below is a comprehensive breakdown of the exact storage items placed in your browser:
         </p>
 
         <!-- Storage Item Breakdown Cards -->
@@ -136,10 +148,13 @@
           <div class="p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-ink-200 bg-ink-50/50 space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <span class="font-mono text-sm sm:text-base font-bold text-ink-950">fegoname_encoded_groq</span>
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">User Controlled</span>
+              <span
+                class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">User
+                Controlled</span>
             </div>
             <p class="text-[15.5px] sm:text-base text-ink-800 leading-relaxed">
-              Stores your obfuscated personal Groq API key when entered in Settings. Stored exclusively on your machine so you do not need to re-enter your key across searches.
+              Stores your obfuscated personal Groq API key when entered in Settings. Stored exclusively on your machine
+              so you do not need to re-enter your key across searches.
             </p>
           </div>
 
@@ -147,21 +162,28 @@
           <div class="p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-ink-200 bg-ink-50/50 space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <span class="font-mono text-sm sm:text-base font-bold text-ink-950">fegoname_license_key</span>
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">Authentication</span>
+              <span
+                class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">Authentication</span>
             </div>
             <p class="text-[15.5px] sm:text-base text-ink-800 leading-relaxed">
-              Holds your Gumroad Lifetime Deal or subscription license code to remember your Pro tier verification between visits.
+              Holds your Gumroad Lifetime Deal or subscription license code to remember your Pro tier verification
+              between visits.
             </p>
           </div>
 
           <!-- Item 3 -->
           <div class="p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-ink-200 bg-ink-50/50 space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <span class="font-mono text-sm sm:text-base font-bold text-ink-950">fegoname_license_status & timestamp</span>
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">Cache State</span>
+              <span class="font-mono text-sm sm:text-base font-bold text-ink-950">fegoname_license_status &
+                timestamp</span>
+              <span
+                class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">Cache
+                State</span>
             </div>
             <p class="text-[15.5px] sm:text-base text-ink-800 leading-relaxed">
-              Caches license validation states (<code class="font-mono text-sm">active</code> or <code class="font-mono text-sm">invalid</code>) and epoch timestamps to avoid making redundant network verification requests on every page load.
+              Caches license validation states (<code class="font-mono text-sm">active</code> or <code
+                class="font-mono text-sm">invalid</code>) and epoch timestamps to avoid making redundant network
+              verification requests on every page load.
             </p>
           </div>
 
@@ -169,10 +191,13 @@
           <div class="p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-ink-200 bg-ink-50/50 space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <span class="font-mono text-sm sm:text-base font-bold text-ink-950">fegoname_limit_locked_until</span>
-              <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">Quota Sync</span>
+              <span
+                class="text-xs font-mono px-2.5 py-0.5 rounded bg-white text-teal-700 border border-teal-200 font-semibold">Quota
+                Sync</span>
             </div>
             <p class="text-[15.5px] sm:text-base text-ink-800 leading-relaxed">
-              Stores local rate limit expiration timers (24-hour sync) when free trial quotas on an IP address have reached the maximum free threshold.
+              Stores local rate limit expiration timers (24-hour sync) when free trial quotas on an IP address have
+              reached the maximum free threshold.
             </p>
           </div>
         </div>
@@ -184,10 +209,14 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">03.</span> Edge Infrastructure Cookies
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          While FegoName sets zero promotional cookies directly, our edge network provider, <strong class="text-ink-950">Cloudflare</strong>, may transmit strictly necessary technical cookies (such as security verification, bot mitigation tokens, or load balancing routing tokens like <code class="font-mono text-sm">__cf_bm</code> or <code class="font-mono text-sm">cf_clearance</code>).
+          While FegoName sets zero promotional cookies directly, our edge network provider, <strong
+            class="text-ink-950">Cloudflare</strong>, may transmit strictly necessary technical cookies (such as
+          security verification, bot mitigation tokens, or load balancing routing tokens like <code
+            class="font-mono text-sm">__cf_bm</code> or <code class="font-mono text-sm">cf_clearance</code>).
         </p>
         <p class="text-ink-800 leading-relaxed">
-          These cookies are vital for DDoS defense, malicious bot filtration, and maintaining secure SSL handshakes. They cannot be turned off as they are mandatory for delivering safe, high-speed edge compute.
+          These cookies are vital for DDoS defense, malicious bot filtration, and maintaining secure SSL handshakes.
+          They cannot be turned off as they are mandatory for delivering safe, high-speed edge compute.
         </p>
       </section>
 
@@ -201,10 +230,13 @@
         </p>
         <ul class="list-disc pl-5 space-y-2.5 text-ink-800 marker:text-teal-600">
           <li>
-            <strong class="text-ink-950">Via FegoName:</strong> Open the API Key modal on the home page and click <span class="text-rose-600 font-semibold">"Remove Key"</span> to immediately purge your saved Groq key from local storage.
+            <strong class="text-ink-950">Via FegoName:</strong> Open the API Key modal on the home page and click <span
+              class="text-rose-600 font-semibold">"Remove Key"</span> to immediately purge your saved Groq key from
+            local storage.
           </li>
           <li>
-            <strong class="text-ink-950">Via Your Browser:</strong> You can purge all stored licenses, quotas, and preferences at any time by opening your browser settings and clearing site data/cookies for this domain.
+            <strong class="text-ink-950">Via Your Browser:</strong> You can purge all stored licenses, quotas, and
+            preferences at any time by opening your browser settings and clearing site data/cookies for this domain.
           </li>
         </ul>
       </section>
@@ -215,7 +247,10 @@
           <span class="text-teal-600 font-mono text-base sm:text-lg">05.</span> Policy Updates & Inquiries
         </h2>
         <p class="text-ink-800 leading-relaxed">
-          Any modifications to how we handle local storage or technical cookies will be reflected directly on this page with an updated timestamp. If you have any technical questions regarding our storage practices, feel free to submit an inquiry through our <a href="contact.html" class="text-teal-600 hover:text-teal-800 font-semibold underline underline-offset-2">Contact Page</a>.
+          Any modifications to how we handle local storage or technical cookies will be reflected directly on this page
+          with an updated timestamp. If you have any technical questions regarding our storage practices, feel free to
+          submit an inquiry through our <a href="contact.html"
+            class="text-teal-600 hover:text-teal-800 font-semibold underline underline-offset-2">Contact Page</a>.
         </p>
       </section>
 
@@ -224,7 +259,8 @@
 
   <!-- Footer -->
   <footer class="border-t border-ink-200 bg-white py-6 mt-12 sm:mt-16">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink-500">
+    <div
+      class="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ink-500">
       <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
         <a href="terms.html" class="hover:text-ink-900 transition">Terms</a>
         <a href="privacy.html" class="hover:text-ink-900 transition">Privacy</a>
