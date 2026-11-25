@@ -275,19 +275,33 @@
     <div
       class="bg-white border border-ink-200/90 rounded-3xl max-w-xl w-full shadow-2xl relative max-h-[92vh] flex flex-col overflow-hidden">
       <div
-        class="sticky top-0 z-20 bg-white px-6 sm:px-9 pt-6 sm:pt-8 pb-5 border-b border-ink-100/80 flex items-start justify-between">
-        <div class="pr-6">
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-ink-950 tracking-tight">
-            Unlock Fego<span class="text-teal-600">Name</span>
-          </h3>
-          <p id="upgradeModalSubtitle" class="text-xs sm:text-sm text-ink-600 mt-1 leading-relaxed">
-            Full unlimited access for freelancers & agencies providing naming services to clients.
-          </p>
+        class="sticky top-0 z-20 bg-white px-6 sm:px-9 pt-6 sm:pt-8 pb-5 border-b border-ink-100/80">
+        <div class="flex items-start justify-between">
+          <div class="pr-6">
+            <h3 id="upgradeModalTitle" class="text-2xl sm:text-3xl font-extrabold text-ink-950 tracking-tight">
+              Unlock Fego<span class="text-teal-600">Name</span>
+            </h3>
+            <p id="upgradeModalSubtitle" class="text-xs sm:text-sm text-ink-600 mt-1 leading-relaxed">
+              Full unlimited access for freelancers & agencies providing naming services to clients.
+            </p>
+          </div>
+          <button type="button" onclick="closeModal('upgradeModal')"
+            class="text-ink-400 hover:text-ink-700 transition text-lg font-mono leading-none shrink-0 p-1">
+            ✕
+          </button>
         </div>
-        <button type="button" onclick="closeModal('upgradeModal')"
-          class="text-ink-400 hover:text-ink-700 transition text-lg font-mono leading-none shrink-0 p-1">
-          ✕
-        </button>
+
+        <!-- 2-Column Plan Dates Strip (Pro Only) -->
+        <div id="proPlanDatesBox" class="hidden mt-4 grid grid-cols-2 divide-x divide-ink-200/80 rounded-xl border border-ink-200/90 bg-canvas px-4 py-2.5">
+          <div class="pr-3">
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-ink-500">Plan Start</div>
+            <div id="planStartValue" class="mt-0.5 text-xs sm:text-sm font-bold text-ink-950">—</div>
+          </div>
+          <div class="pl-4">
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-ink-500">Plan Expiry</div>
+            <div id="planExpiryValue" class="mt-0.5 text-xs sm:text-sm font-bold text-ink-950">—</div>
+          </div>
+        </div>
       </div>
 
       <div class="px-6 sm:px-9 py-6 overflow-y-auto space-y-6">
@@ -317,7 +331,7 @@
               </button>
             </div>
             <button type="button" id="activateLicenseBtn" onclick="verifyLicense()"
-              class="px-5 py-3 rounded-xl bg-ink-950 hover:bg-black text-white text-sm font-semibold transition active:scale-95 shrink-0 border border-ink-800 shadow-xs">
+              class="px-5 py-3 rounded-xl bg-ink-950 hover:bg-black text-white text-sm font-semibold transition active:scale-95 shrink-0 border border-ink-800 shadow-xs disabled:opacity-45 disabled:cursor-not-allowed disabled:hover:bg-ink-950 disabled:active:scale-100">
               Activate
             </button>
           </div>
@@ -491,6 +505,8 @@
     const LS_LICENSE_PLAN = "fegoname_license_plan";       // "lifetime" | "annual" | "monthly"
     const LS_LICENSE_STATUS = "fegoname_license_status";     // "active" | "invalid"
     const LS_LICENSE_TIMESTAMP = "fegoname_license_timestamp"; // epoch ms
+    const LS_LICENSE_STARTED_AT = "fegoname_license_started_at"; // ISO string from Gumroad
+    const LS_LICENSE_DURATION_DAYS = "fegoname_license_duration_days"; // "30" | "365" | ""
     const LS_LIMIT_LOCKED = "fegoname_limit_locked_until";    // epoch ms (24h lock for 0 free quota)
     const LS_PACKED_KEY = "fegoname_encoded_groq";
     const LS_SEEN_HIGHLIGHT = "fegoname_seen_highlight_anim";
@@ -507,13 +523,18 @@
 
     const threadContainer = document.getElementById('threadContainer');
     const upgradeModal = document.getElementById('upgradeModal');
+    const upgradeModalTitle = document.getElementById('upgradeModalTitle');
     const upgradeModalSubtitle = document.getElementById('upgradeModalSubtitle');
+    const proPlanDatesBox = document.getElementById('proPlanDatesBox');
+    const planStartValue = document.getElementById('planStartValue');
+    const planExpiryValue = document.getElementById('planExpiryValue');
     const settingsModal = document.getElementById('settingsModal');
     const settingsModalSubtitle = document.getElementById('settingsModalSubtitle');
     const openUpgradeBtn = document.getElementById('openUpgradeBtn');
     const openSettingsBtn = document.getElementById('openSettingsBtn');
     const upgradeBtnLabel = document.getElementById('upgradeBtnLabel');
     const licenseInput = document.getElementById('licenseInput');
+    const activateLicenseBtn = document.getElementById('activateLicenseBtn');
     const licenseFeedback = document.getElementById('licenseFeedback');
     const groqKeyInput = document.getElementById('groqKeyInput');
     const keyIndicatorDot = document.getElementById('keyIndicatorDot');
@@ -533,12 +554,118 @@
       );
     }
 
-    function resolvePlanLabel(planRaw, typeRaw) {
+    function resolvePlanLabel(planRaw, typeRaw, durationDays = null) {
+      if (durationDays === 30) return "monthly";
+      if (durationDays === 365) return "annual";
       const p = (planRaw || "").toLowerCase();
       if (p.includes("30") || p.includes("month")) return "monthly";
       if (p.includes("365") || p.includes("annual") || p.includes("year")) return "annual";
       if (p.includes("life") || typeRaw === "lifetimedeal") return "lifetime";
       return "lifetime";
+    }
+
+    function formatShortDate(ms) {
+      return new Date(ms).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    }
+
+    function getPlanScheduleInfo() {
+      const planKind = localStorage.getItem(LS_LICENSE_PLAN) || "lifetime";
+      const startedAt = localStorage.getItem(LS_LICENSE_STARTED_AT) || "";
+      const durationDays = parseInt(
+        localStorage.getItem(LS_LICENSE_DURATION_DAYS) ||
+          (planKind === "monthly" ? "30" : planKind === "annual" ? "365" : "0"),
+        10
+      );
+
+      if (!startedAt || !durationDays || Number.isNaN(durationDays)) {
+        return { planKind, isExpired: false, startLabel: null, expiryLabel: null };
+      }
+
+      const startMs = Date.parse(startedAt);
+      if (Number.isNaN(startMs)) {
+        return { planKind, isExpired: false, startLabel: null, expiryLabel: null };
+      }
+
+      const expiryMs = startMs + durationDays * 24 * 60 * 60 * 1000;
+      return {
+        planKind,
+        isExpired: Date.now() > expiryMs,
+        startLabel: formatShortDate(startMs),
+        expiryLabel: formatShortDate(expiryMs),
+      };
+    }
+
+    function syncActivateButtonState() {
+      if (!licenseInput || !activateLicenseBtn) return;
+      const currentVal = licenseInput.value.trim();
+      const savedLicense = (localStorage.getItem(LS_LICENSE) || "").trim();
+      const isPro = localStorage.getItem(LS_PRO) === "true";
+      const isActive = localStorage.getItem(LS_LICENSE_STATUS) === "active";
+
+      if (!currentVal) {
+        activateLicenseBtn.disabled = true;
+        return;
+      }
+
+      if (isPro && isActive && currentVal === savedLicense) {
+        activateLicenseBtn.disabled = true;
+      } else {
+        activateLicenseBtn.disabled = false;
+      }
+    }
+
+    function updateUpgradeModalHeader(customMessage = null) {
+      const isPro = localStorage.getItem(LS_PRO) === "true";
+
+      if (isPro) {
+        if (upgradeModalTitle) {
+          upgradeModalTitle.innerHTML = `Fego<span class="text-teal-600">Name</span> PRO`;
+        }
+
+        const { planKind, startLabel, expiryLabel } = getPlanScheduleInfo();
+        const planTitle =
+          planKind === "monthly"
+            ? "1-Month Pro"
+            : planKind === "annual"
+              ? "1-Year Pro"
+              : "Lifetime Pro";
+
+        if (upgradeModalSubtitle) {
+          upgradeModalSubtitle.textContent =
+            customMessage || `You have an active ${planTitle} plan.`;
+        }
+
+        if (proPlanDatesBox && planStartValue && planExpiryValue) {
+          if (planKind === "lifetime") {
+            const activatedTs = parseInt(localStorage.getItem(LS_LICENSE_TIMESTAMP) || "0", 10);
+            planStartValue.textContent = startLabel || (activatedTs > 0 ? formatShortDate(activatedTs) : "Active");
+            planExpiryValue.textContent = "Never (Lifetime)";
+            proPlanDatesBox.classList.remove("hidden");
+          } else if (startLabel && expiryLabel) {
+            planStartValue.textContent = startLabel;
+            planExpiryValue.textContent = expiryLabel;
+            proPlanDatesBox.classList.remove("hidden");
+          } else {
+            proPlanDatesBox.classList.add("hidden");
+          }
+        }
+      } else {
+        if (upgradeModalTitle) {
+          upgradeModalTitle.innerHTML = `Unlock Fego<span class="text-teal-600">Name</span>`;
+        }
+        if (upgradeModalSubtitle) {
+          upgradeModalSubtitle.textContent =
+            customMessage ||
+            "Full unlimited access for freelancers & agencies providing naming services to clients.";
+        }
+        if (proPlanDatesBox) {
+          proPlanDatesBox.classList.add("hidden");
+        }
+      }
     }
 
     function showPlanActivatedBanner(planKind) {
@@ -804,6 +931,7 @@
       openUpgradeBtn.classList.replace("bg-ink-950", "bg-teal-700");
       openUpgradeBtn.classList.replace("hover:bg-black", "hover:bg-teal-800");
 
+      updateUpgradeModalHeader();
       updateAllQuotaPills();
       syncLicenseInputUI();
     }
@@ -816,6 +944,8 @@
       upgradeBtnLabel.textContent = "Upgrade";
       openUpgradeBtn.classList.replace("bg-teal-700", "bg-ink-950");
       openUpgradeBtn.classList.replace("hover:bg-teal-800", "hover:bg-black");
+
+      updateUpgradeModalHeader();
 
       const now = Date.now();
       const lockedUntil = parseInt(localStorage.getItem(LS_LIMIT_LOCKED) || "0", 10);
@@ -870,7 +1000,25 @@
       const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
       if (savedLicense) {
-        if (licenseStatus === "active" && (now - licenseTime < ONE_DAY_MS)) {
+        const schedule = getPlanScheduleInfo();
+        if (licenseStatus === "active" && schedule.isExpired) {
+          localStorage.setItem(LS_PRO, "false");
+          localStorage.setItem(LS_LICENSE_STATUS, "invalid");
+          localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+          await applyFreeUI(liveRemaining);
+          updateUpgradeModalHeader(
+            `Your license code expired on ${schedule.expiryLabel}. Please enter a renewed license code.`
+          );
+          openModal('upgradeModal');
+          return;
+        }
+
+        const hasStartDate =
+          savedType === "lifetimedeal" ||
+          isLifetimePrefix(savedLicense.trim().toUpperCase()) ||
+          Boolean(localStorage.getItem(LS_LICENSE_STARTED_AT));
+
+        if (licenseStatus === "active" && hasStartDate && (now - licenseTime < ONE_DAY_MS)) {
           applyProUI();
           return;
         }
@@ -878,7 +1026,7 @@
           applyFreeUI(liveRemaining);
           return;
         }
-        if (licenseStatus === "active" && (now - licenseTime >= ONE_DAY_MS)) {
+        if (licenseStatus === "active" && (!hasStartDate || now - licenseTime >= ONE_DAY_MS)) {
           try {
             const cleanKeyUpper = savedLicense.trim().toUpperCase();
             const inferredType = savedType || (isLifetimePrefix(cleanKeyUpper) ? "lifetimedeal" : "gumroad");
@@ -893,10 +1041,18 @@
             });
             const data = await res.json().catch(() => ({}));
             if (res.ok && data.success) {
+              const activeType = data.license_type || inferredType;
+              const planKind = resolvePlanLabel(data.plan, activeType, data.duration_days);
+
               localStorage.setItem(LS_LICENSE_STATUS, "active");
               localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
-              if (data.license_type) {
-                localStorage.setItem(LS_LICENSE_TYPE, data.license_type);
+              localStorage.setItem(LS_LICENSE_TYPE, activeType);
+              localStorage.setItem(LS_LICENSE_PLAN, planKind);
+              if (data.started_at) {
+                localStorage.setItem(LS_LICENSE_STARTED_AT, data.started_at);
+              }
+              if (data.duration_days) {
+                localStorage.setItem(LS_LICENSE_DURATION_DAYS, String(data.duration_days));
               }
               applyProUI();
               return;
@@ -905,8 +1061,12 @@
               localStorage.setItem(LS_LICENSE_STATUS, "invalid");
               localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
               if (data.expired || data.isExpired) {
-                upgradeModalSubtitle.textContent = data.error || data.message || "Your license code has expired. Please enter a renewed license code.";
+                await applyFreeUI(liveRemaining);
+                updateUpgradeModalHeader(
+                  data.error || data.message || "Your license code has expired. Please enter a renewed license code."
+                );
                 openModal('upgradeModal');
+                return;
               }
             }
           } catch (e) {
@@ -1141,7 +1301,7 @@
       const userKey = unpackKey(localStorage.getItem(LS_PACKED_KEY) || "");
 
       if (!isPro) {
-        upgradeModalSubtitle.textContent = "Unlock Pro to load unlimited batches.";
+        updateUpgradeModalHeader("Unlock Pro to load unlimited batches.");
         openModal('upgradeModal');
         return;
       }
@@ -1191,7 +1351,7 @@
       } else {
         const lockedUntil = parseInt(localStorage.getItem(LS_LIMIT_LOCKED) || "0", 10);
         if (Date.now() < lockedUntil) {
-          upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro for unlimited access.`;
+          updateUpgradeModalHeader(`Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro for unlimited access.`);
           openModal('upgradeModal');
           return;
         }
@@ -1293,8 +1453,8 @@
             if (errData.expired || errData.isExpired) {
               localStorage.setItem(LS_PRO, "false");
               localStorage.setItem(LS_LICENSE_STATUS, "invalid");
-              applyFreeUI();
-              upgradeModalSubtitle.textContent = errData.error || errData.message || "Your license code has expired. Please enter a renewed license code.";
+              await applyFreeUI();
+              updateUpgradeModalHeader(errData.error || errData.message || "Your license code has expired. Please enter a renewed license code.");
               openModal('upgradeModal');
               throw new Error(errData.error || errData.message || "Your license has expired.");
             }
@@ -1302,7 +1462,7 @@
             const lockExpiry = Date.now() + (24 * 60 * 60 * 1000);
             localStorage.setItem(LS_LIMIT_LOCKED, lockExpiry.toString());
             syncBackendQuota(0);
-            upgradeModalSubtitle.textContent = `Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro for unlimited access.`;
+            updateUpgradeModalHeader(`Free trial limit reached (${MAX_FREE_SEARCHES_TOTAL}/${MAX_FREE_SEARCHES_TOTAL} searches used). Unlock Pro for unlimited access.`);
             openModal('upgradeModal');
             throw new Error("Free trial limit reached. Unlock Pro for unlimited access.");
           }
@@ -1527,6 +1687,7 @@
         licenseFeedback.textContent = "License active and verified.";
         licenseFeedback.classList.remove('hidden');
       }
+      syncActivateButtonState();
     }
 
     window.verifyLicense = async function () {
@@ -1560,7 +1721,7 @@
 
         if (res.ok && data.success) {
           const activeType = data.license_type || initialType;
-          const planKind = resolvePlanLabel(data.plan, activeType);
+          const planKind = resolvePlanLabel(data.plan, activeType, data.duration_days);
 
           localStorage.setItem(LS_PRO, "true");
           localStorage.setItem(LS_LICENSE, key);
@@ -1568,6 +1729,16 @@
           localStorage.setItem(LS_LICENSE_PLAN, planKind);
           localStorage.setItem(LS_LICENSE_STATUS, "active");
           localStorage.setItem(LS_LICENSE_TIMESTAMP, now.toString());
+          if (data.started_at) {
+            localStorage.setItem(LS_LICENSE_STARTED_AT, data.started_at);
+          } else {
+            localStorage.removeItem(LS_LICENSE_STARTED_AT);
+          }
+          if (data.duration_days) {
+            localStorage.setItem(LS_LICENSE_DURATION_DAYS, String(data.duration_days));
+          } else {
+            localStorage.removeItem(LS_LICENSE_DURATION_DAYS);
+          }
           localStorage.removeItem(LS_LIMIT_LOCKED);
 
           licenseFeedback.className = "text-xs mt-2 text-teal-700 font-semibold";
@@ -1598,8 +1769,8 @@
         licenseFeedback.className = "text-xs mt-2 text-rose-600 font-semibold";
         licenseFeedback.textContent = "Unable to reach verification server.";
       } finally {
-        btn.disabled = false;
         btn.textContent = "Activate";
+        syncActivateButtonState();
       }
     };
 
@@ -1694,8 +1865,12 @@
 
       appendNewSearchTurn();
 
+      if (licenseInput) {
+        licenseInput.addEventListener('input', syncActivateButtonState);
+      }
+
       openUpgradeBtn.addEventListener('click', () => {
-        upgradeModalSubtitle.textContent = "Full unlimited access for freelancers & agencies providing naming services to clients.";
+        updateUpgradeModalHeader();
         syncLicenseInputUI();
         openModal('upgradeModal');
       });
